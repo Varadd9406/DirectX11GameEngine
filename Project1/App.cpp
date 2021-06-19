@@ -13,14 +13,15 @@ App::App() :wnd(800,600, "Honey I'm Home"),light(wnd.Gfx())
 	std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
 	std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
 	std::uniform_real_distribution<float> rdist(6.0f, 20.0f);
+	std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
 	std::uniform_real_distribution<float> cdist(0.0f,1.0f);
 
-	for (auto i = 0; i < 50; i++)
+	for (auto i = 0; i < 200; i++)
 	{
 		const DirectX::XMFLOAT3 mat = { cdist(rng),cdist(rng),cdist(rng) };
 		boxes.push_back(std::make_unique<Box>(
 			wnd.Gfx(), rng, adist,
-			ddist, odist, rdist,mat
+			ddist, odist, rdist,bdist,mat
 			));
 	}
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));

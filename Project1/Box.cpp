@@ -16,21 +16,12 @@ Box::Box(Graphics& gfx,
 	std::uniform_real_distribution<float>& ddist,
 	std::uniform_real_distribution<float>& odist,
 	std::uniform_real_distribution<float>& rdist,
-	DirectX::XMFLOAT3 material)
-	:
-	r(rdist(rng)),
-	droll(ddist(rng)),
-	dpitch(ddist(rng)),
-	dyaw(ddist(rng)),
-	dphi(odist(rng)),
-	dtheta(odist(rng)),
-	dchi(odist(rng)),
-	chi(adist(rng)),
-	theta(adist(rng)),
-	phi(adist(rng))
+	std::uniform_real_distribution<float>& bdist,
+	DirectX::XMFLOAT3 material):
+	RandomRotatingObject(gfx,rng,adist,ddist,odist,rdist)
 {
 	if (!IsStaticInitialized())
-	{
+	{ 
 		struct Vertex
 		{
 			DirectX::XMFLOAT3 pos;
@@ -46,7 +37,7 @@ Box::Box(Graphics& gfx,
 
 		AddStaticBind(std::make_unique<PixelShader>(gfx, L"PhongPS.cso"));
 
-		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model. indices));
+		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
 
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 		{
@@ -72,22 +63,14 @@ Box::Box(Graphics& gfx,
 	} colorConst ;
 	colorConst.color = material;
 	AddBind(std::make_unique<PixelConstantBuffer<PSMaterialConstant>>(gfx, colorConst, 1u));
-
-}
-
-void Box::Update(float dt)
-{
-	roll += droll * dt;
-	pitch += dpitch * dt;
-	yaw += dyaw * dt;
-	theta += dtheta * dt;
-	phi += dphi * dt;
-	chi += dchi * dt;
+	DirectX::XMStoreFloat3x3(
+		&mt,
+		DirectX::XMMatrixScaling(1.0f, 1.0f, bdist(rng))
+	);
 }
 
 DirectX::XMMATRIX Box::GetTransformXM() const
 {
-	return (DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
-		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) *
-		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi));
+	namespace dx = DirectX;
+	return DirectX::XMLoadFloat3x3(&mt) * RandomRotatingObject::GetTransformXM();
 }

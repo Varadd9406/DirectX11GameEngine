@@ -221,6 +221,7 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="SolidSphere.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="RandomRotatingObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Mouse.h" />
