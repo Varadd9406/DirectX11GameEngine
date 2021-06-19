@@ -197,9 +197,6 @@
     <ClInclude Include="DrawableBase.h">
       <Filter>Header Files\Drawable</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Coding\C++\imgui\imconfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
