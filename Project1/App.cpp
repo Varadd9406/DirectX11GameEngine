@@ -6,11 +6,11 @@
 #include "imgui/imgui_impl_dx11.h"
 
 
-App::App() :wnd(800,600, "Honey I'm Home"),light(wnd.Gfx())
+App::App()
+	:wnd(1024, 768, "Honey I'm Home"),
+	light(wnd.Gfx())
 {
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10000.0f));
-	wnd.Gfx().SetCamera(DirectX::XMMatrixTranslation(0.0f,0.0f, 20.0f));
-
 }
 
 
@@ -25,12 +25,13 @@ void App::DoFrame()
 	light.Bind(wnd.Gfx(), cam.GetMatrix());
 	const auto transform = DirectX::XMMatrixRotationRollPitchYaw(pos.roll, pos.pitch, pos.yaw) *
 		DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
-	AWP.Draw(wnd.Gfx(), transform);
+	AWP.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
 
 	ImguiStuff();
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
+	AWP.ShowWindow();
 	wnd.Gfx().EndFrame();
 }
 

@@ -39,7 +39,7 @@ void Camera::SpawnControlWindow()
 
 void Camera::Reset()
 {
-	r = 20.0f;
+	r = 50.0f;
 	theta = 0.0f;
 	phi = 0.0f;
 	pitch = 0.0f;
