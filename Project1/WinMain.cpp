@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "App.h"
 #include <sstream>
+#pragma comment(lib,"assimp-vc140-mt.lib")
 
 int CALLBACK WinMain
 (

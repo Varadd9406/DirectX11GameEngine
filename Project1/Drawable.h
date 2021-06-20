@@ -14,7 +14,7 @@ public:
 	Drawable(const Drawable&) = delete;
 	virtual DirectX::XMMATRIX GetTransformXM() const = 0;
 	void Draw(Graphics& gfx) const ;
-	virtual void Update(float dt) = 0;
+	virtual void Update(float dt) {};
 	void AddBind(std::unique_ptr<Bindable> bind);
 	void AddIndexBuffer(std::unique_ptr<class IndexBuffer> ibuf);
 	virtual ~Drawable() = default;

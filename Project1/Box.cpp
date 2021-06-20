@@ -21,7 +21,7 @@ Box::Box(Graphics& gfx,
 	RandomRotatingObject(gfx,rng,adist,ddist,odist,rdist)
 {
 	if (!IsStaticInitialized())
-	{ 
+	{
 		struct Vertex
 		{
 			DirectX::XMFLOAT3 pos;
@@ -52,7 +52,7 @@ Box::Box(Graphics& gfx,
 	{
 		SetIndexFromStatic();
 	}
-	
+	// Per INSTANCE initialization
 	AddBind(std::make_unique<TransformCbuf>(gfx, *this));
 	struct PSMaterialConstant
 	{

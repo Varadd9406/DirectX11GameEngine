@@ -6,7 +6,7 @@
 #include "ImguiManger.h"
 #include "Camera.h"
 #include "PointLight.h"
-
+#include "Mesh.h"
 class App
 {
 	
@@ -21,7 +21,16 @@ private:
 	ImguiManager imgui;
 	Window wnd;
 	Timer timer;
-	std::vector<std::unique_ptr<class Drawable>> boxes;
 	Camera cam;
 	PointLight light;
+	Model AWP{ wnd.Gfx(),"models\\AWP_Dragon_Lore.3DS" };
+	struct
+	{
+		float roll = 0.0f;
+		float pitch = 0.0f;
+		float yaw = 0.0f;
+		float x = 0.0f;
+		float y = 0.0f;
+		float z = 0.0f;
+	} pos;
 };
