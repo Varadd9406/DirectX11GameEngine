@@ -2,7 +2,7 @@
 #include "imgui/imgui.h"
 #include <unordered_map>
 #include <sstream>
-
+#include <iostream>
 namespace dx = DirectX;
 
 
@@ -179,7 +179,7 @@ Model::Model(Graphics& gfx, const std::string fileName)
 
 	for (size_t i = 0; i < pScene->mNumMeshes; i++)
 	{
-		meshPtrs.push_back(ParseMesh(gfx, *pScene->mMeshes[i]));
+		meshPtrs.push_back(ParseMesh(gfx, *pScene->mMeshes[i], pScene->mMaterials));
 	}
 
 	pRoot = ParseNode(*pScene->mRootNode);
@@ -202,7 +202,7 @@ void Model::ShowWindow(const char* windowName)
 Model::~Model() noexcept
 {}
 
-std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh)
+std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials)
 {
 	namespace dx = DirectX;
 	using dymvtx::VertexLayout;
@@ -238,11 +238,12 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh)
 
 
 	std::vector<std::unique_ptr<Bindable>> bindablePtrs;
+	
+	bindablePtrs.push_back(std::make_unique<Texture>(gfx, L"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png"));
 
-	bindablePtrs.push_back(std::make_unique<Texture>(gfx, L"Models\\dragon_lore.bmp"));
+	//bindablePtrs.push_back(std::make_unique<Texture>(gfx, L"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",1));
 
 	bindablePtrs.push_back(std::make_unique<Sampler>(gfx));
-
 
 	bindablePtrs.push_back(std::make_unique<VertexBuffer>(gfx, vbuf));
 
@@ -252,17 +253,19 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh)
 	auto pvsbc = pvs->GetBytecode();
 	bindablePtrs.push_back(std::move(pvs));
 
-	bindablePtrs.push_back(std::make_unique<PixelShader>(gfx, L"TexPhongPS.cso"));
 
 	bindablePtrs.push_back(std::make_unique<InputLayout>(gfx, vbuf.GetLayout().GetD3DLayout(), pvsbc));
 
-	struct PSMaterialConstant
+
+	bindablePtrs.push_back(std::make_unique<PixelShader>(gfx, L"TexSpecPhongPS.cso"));
+
+	/*struct PSMaterialConstant
 	{
 		float specularIntensity = 0.6f;
 		float specularPower = 30.0f;
 		float padding[2];
 	} pmc;
-	bindablePtrs.push_back(std::make_unique<PixelConstantBuffer<PSMaterialConstant>>(gfx, pmc, 1u));
+	bindablePtrs.push_back(std::make_unique<PixelConstantBuffer<PSMaterialConstant>>(gfx, pmc, 1u));*/
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
 }

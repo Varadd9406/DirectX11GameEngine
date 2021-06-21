@@ -245,7 +245,7 @@
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\Drawable</Filter>
     </ClInclude>
-    <ClInclude Include="UtilityMath.h">
+    <ClInclude Include="Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PointLight.h">
@@ -296,6 +296,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="TexPhongPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexSpecPhongPS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

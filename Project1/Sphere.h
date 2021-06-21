@@ -1,7 +1,7 @@
 #pragma once
 #include "IndexedTriangleList.h"
 #include <DirectXMath.h>
-#include "UtilityMath.h"
+#include "Utility.h"
 
 class Sphere
 {
