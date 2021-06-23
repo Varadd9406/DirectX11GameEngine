@@ -24,13 +24,13 @@ void App::DoFrame()
 	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
 	wnd.Gfx().SetCamera(cam.GetMatrix());
 	light.Bind(wnd.Gfx(), cam.GetMatrix());
-	AWP.Draw(wnd.Gfx());
+	hammer_time.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
 
 	ImguiStuff();
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	AWP.ShowWindow();
+	hammer_time.ShowWindow();
 	wnd.Gfx().EndFrame();
 }
 

@@ -22,7 +22,7 @@ private:
 	Timer timer;
 	Camera cam;
 	PointLight light;
-	Model AWP{ wnd.Gfx(),"Models\\Rune_Hammer\\Rune_Hammer.fbx" };
+	Model hammer_time{ wnd.Gfx(),"Models\\Rune_Hammer\\Rune_Hammer.fbx" };
 	struct
 	{
 		float roll = 0.0f;
