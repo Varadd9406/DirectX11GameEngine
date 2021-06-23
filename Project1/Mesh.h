@@ -1,5 +1,5 @@
 #pragma once
-#include "DrawableBase.h"
+#include "Drawable.h"
 #include "BindableBasic.h"
 #include "Vertex.h"
 #include <optional>
@@ -7,10 +7,10 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-class Mesh : public DrawableBase<Mesh>
+class Mesh : public Drawable
 {
 public:
-	Mesh(Graphics& gfx, std::vector<std::unique_ptr<Bindable>> bindPtrs);
+	Mesh(Graphics& gfx, std::vector<std::shared_ptr<Bindable>> bindPtrs);
 	void Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const ;
 	DirectX::XMMATRIX GetTransformXM() const override;
 private:
@@ -20,16 +20,17 @@ private:
 class Node
 {
 	friend class Model;
-	friend class ModelWindow;
 public:
-	Node(const std::string& name, std::vector<Mesh*> meshPtrs, const DirectX::XMMATRIX& transform);
+	Node(int id, const std::string& name, std::vector<Mesh*> meshPtrs, const DirectX::XMMATRIX& transform);
 	void Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const;
 	void SetAppliedTransform(DirectX::FXMMATRIX transform);
+	int GetId() const;
+	void ShowTree(Node*& pSelectedNode) const;
 private:
 	void AddChild(std::unique_ptr<Node> pChild);
-	void ShowTree(int& nodeIndex, std::optional<int>& selectedIndex, Node*& pSelectedNode) const;
 private:
 	std::string name;
+	int id;
 	std::vector<std::unique_ptr<Node>> childPtrs;
 	std::vector<Mesh*> meshPtrs;
 	DirectX::XMFLOAT4X4 transform;
@@ -45,7 +46,7 @@ public:
 	~Model() ;
 private:
 	static std::unique_ptr<Mesh> ParseMesh(Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials);
-	std::unique_ptr<Node> ParseNode(const aiNode& node);
+	std::unique_ptr<Node> ParseNode(int& nextId, const aiNode& node);
 private:
 	std::unique_ptr<Node> pRoot;
 	std::vector<std::unique_ptr<Mesh>> meshPtrs;

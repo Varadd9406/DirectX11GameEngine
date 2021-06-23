@@ -38,7 +38,7 @@ void PointLight::SpawnControlWindow()
 void PointLight::Reset() 
 {
 	cbData = {
-		{0.0f,0.0f,0.0f},
+		{2.5f,1.7f,0.0f},
 		{0.05f,0.05f,0.05f},
 		{1.0f,1.0f,1.0f},
 		1.0f,

@@ -2,46 +2,25 @@
 #include "Bindable.h"
 #include "GraphicsThrowMacros.h"
 #include "Vertex.h"
+#include <memory>
 class VertexBuffer : public Bindable
 {
 public:
-	template<class V>
-	VertexBuffer(Graphics& gfx, const std::vector<V>& vertices)
-		:
-		stride(sizeof(V))
+	VertexBuffer(Graphics& gfx, const std::string& tag, const dymvtx::VertexBuffer& vbuf);
+	VertexBuffer(Graphics& gfx, const dymvtx::VertexBuffer& vbuf);
+	void Bind(Graphics& gfx) override;
+	static std::shared_ptr<VertexBuffer> Resolve(Graphics& gfx, const std::string& tag,
+		const dymvtx::VertexBuffer& vbuf);
+	template<typename...Ignore>
+	static std::string GenerateUID(const std::string& tag, Ignore&&...ignore)
 	{
-		INFOMAN(gfx);
-
-		D3D11_BUFFER_DESC bd = {};
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.CPUAccessFlags = 0u;
-		bd.MiscFlags = 0u;
-		bd.ByteWidth = UINT(sizeof(V) * vertices.size());
-		bd.StructureByteStride = sizeof(V);
-		D3D11_SUBRESOURCE_DATA sd = {};
-		sd.pSysMem = vertices.data();
-		DX_EXCEPT_THROW(GetDevice(gfx)->CreateBuffer(&bd, &sd, &pVertexBuffer));
+		return GenerateUID_(tag);
 	}
-	VertexBuffer(Graphics& gfx, const dymvtx::VertexBuffer& vbuf)
-		:
-		stride((UINT) vbuf.GetLayout().Size())
-	{
-		INFOMAN(gfx);
-
-		D3D11_BUFFER_DESC bd = {};
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.CPUAccessFlags = 0u;
-		bd.MiscFlags = 0u;
-		bd.ByteWidth = UINT(vbuf.SizeBytes());
-		bd.StructureByteStride = stride;
-		D3D11_SUBRESOURCE_DATA sd = {};
-		sd.pSysMem = vbuf.GetData();
-		DX_EXCEPT_THROW(GetDevice(gfx)->CreateBuffer(&bd, &sd, &pVertexBuffer));
-	}
-	void Bind(Graphics& gfx)  override;
+	std::string GetUID() const override;
+private:
+	static std::string GenerateUID_(const std::string& tag);
 protected:
+	std::string tag;
 	UINT stride;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
 };

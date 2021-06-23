@@ -3,24 +3,19 @@
 #include "Bindable.h"
 #include <DirectXMath.h>
 #include <memory>
-
+#include "IndexBuffer.h"
 
 class Drawable
 {
-	template<class T>
-	friend class DrawableBase;
 public:
 	Drawable() = default;
 	Drawable(const Drawable&) = delete;
 	virtual DirectX::XMMATRIX GetTransformXM() const = 0;
 	void Draw(Graphics& gfx) const ;
-	virtual void Update(float dt) {};
-	void AddBind(std::unique_ptr<Bindable> bind);
-	void AddIndexBuffer(std::unique_ptr<class IndexBuffer> ibuf);
 	virtual ~Drawable() = default;
-private:
-	virtual const std::vector<std::unique_ptr<Bindable>>& GetStaticBinds() const = 0;
+protected:
+	void AddBind(std::shared_ptr<Bindable> bind);
 private:
 	const IndexBuffer* pIndexBuffer = nullptr;
-	std::vector<std::unique_ptr<Bindable>> binds;
+	std::vector<std::shared_ptr<Bindable>> binds;
 };

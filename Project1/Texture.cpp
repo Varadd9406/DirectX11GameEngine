@@ -2,11 +2,13 @@
 #include "GraphicsThrowMacros.h"
 #include "Utility.h"
 #include <WICTextureLoader.h>
-Texture::Texture(Graphics& gfx, std::wstring fileName, unsigned int slot)
-	:
-	slot(slot)
-{
+#include "BindableCodex.h"
 
+Texture::Texture(Graphics& gfx, std::string path, UINT slot)
+	:
+	path(path),
+	slot(slot) 
+{
 	//string to wstring
 
 	//wchar_t wstr[200];
@@ -16,7 +18,7 @@ Texture::Texture(Graphics& gfx, std::wstring fileName, unsigned int slot)
 	DirectX::CreateWICTextureFromFile
 	(
 		GetDevice(gfx),
-		fileName.c_str(),
+		std::wstring{ path.begin(),path.end()}.c_str(),
 		nullptr,
 		&pTextureView
 	);
@@ -25,4 +27,19 @@ Texture::Texture(Graphics& gfx, std::wstring fileName, unsigned int slot)
 void Texture::Bind(Graphics& gfx)
 {
 	GetContext(gfx)->PSSetShaderResources(slot, 1u, pTextureView.GetAddressOf());
+}
+
+
+std::shared_ptr<Texture> Texture::Resolve(Graphics& gfx, const std::string& path, UINT slot)
+{
+	return Codex::Resolve<Texture>(gfx, path, slot);
+}
+std::string Texture::GenerateUID(const std::string& path, UINT slot)
+{
+	using namespace std::string_literals;
+	return typeid(Texture).name() + "#"s + path + "#" + std::to_string(slot);
+}
+std::string Texture::GetUID() const
+{
+	return GenerateUID(path, slot);
 }

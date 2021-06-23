@@ -7,7 +7,8 @@
 
 
 App::App()
-	:wnd(1024, 768, "Honey I'm Home"),
+	:
+	wnd(1024, 768, "Honey I'm Home"),
 	light(wnd.Gfx())
 {
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10000.0f));
@@ -18,13 +19,11 @@ App::App()
 
 void App::DoFrame()
 {
+	auto dt = timer.Mark() * speed_factor;
 	wnd.Gfx().BeginFrame();
-	wnd.Gfx().SetCamera(cam.GetMatrix());
-	auto dt = timer.Mark()* speed_factor;
 	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
+	wnd.Gfx().SetCamera(cam.GetMatrix());
 	light.Bind(wnd.Gfx(), cam.GetMatrix());
-	const auto transform = DirectX::XMMatrixRotationRollPitchYaw(pos.roll, pos.pitch, pos.yaw) *
-		DirectX::XMMatrixTranslation(pos.x, pos.y, pos.z);
 	AWP.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
 

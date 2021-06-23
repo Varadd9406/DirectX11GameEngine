@@ -366,3 +366,4 @@ FodyWeavers.xsd
 imgui.ini
 assimp-vc140-mt.lib
 assimp-vc140-mt.dll
+*.cso
