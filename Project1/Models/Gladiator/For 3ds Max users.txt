@@ -1,5 +1,0 @@
-Hello!
-
-If you render the Gladiator model in 3ds Max, use geometry from Gladiator_3ds_Max.fbx
-
-and the Gladiator_body_normal_3ds_Max.png for the charaters body normal bump texture.
