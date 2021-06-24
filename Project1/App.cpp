@@ -8,10 +8,10 @@
 
 App::App()
 	:
-	wnd(1024, 768, "Honey I'm Home"),
+	wnd(1280, 720, "Honey I'm Home"),
 	light(wnd.Gfx())
 {
-	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10000.0f));
+	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 9.0f / 16.0f, 0.5f, 100.0f));
 }
 
 

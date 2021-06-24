@@ -24,7 +24,7 @@ float4 main(float3 worldPos : Position, float3 n : Normal,float2 tc : Texcoord) 
 {
     const float3 vTol = lightPos - worldPos;
     const float distTol = length(vTol);
-    const float dirTol = vTol / distTol;
+    const float3 dirTol = vTol / distTol;
     const float att = 1.0f / (attConst + attLin * distTol + attQuad * (distTol * distTol));
     const float3 diffuse = diffuseColor * diffuseIntensity * att * max(0.0f, dot(dirTol, n));
     const float3 w = n * dot(vTol, n);
