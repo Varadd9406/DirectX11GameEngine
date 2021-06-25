@@ -24,13 +24,17 @@ void App::DoFrame()
 	wnd.Gfx().ClearBuffer(0.07f, 0.0f, 0.12f);
 	wnd.Gfx().SetCamera(cam.GetMatrix());
 	light.Bind(wnd.Gfx(), cam.GetMatrix());
+
+
 	hammer_time.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
+	//plane.Draw(wnd.Gfx());
 
 	ImguiStuff();
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	hammer_time.ShowWindow();
+	//plane.SpawnControlWindow(wnd.Gfx());
 	wnd.Gfx().EndFrame();
 }
 

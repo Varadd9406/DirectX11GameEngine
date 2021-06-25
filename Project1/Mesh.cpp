@@ -16,7 +16,7 @@ Mesh::Mesh(Graphics& gfx, std::vector<std::shared_ptr<Bindable>> bindPtrs)
 		AddBind(std::move(pb));
 	}
 
-	AddBind(std::make_shared<TransformCbuf>(gfx, *this));
+	AddBind(std::make_shared<TransformCbuf2>(gfx, *this,0u,2u));
 }
 void Mesh::Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const 
 {
@@ -166,7 +166,9 @@ Model::Model(Graphics& gfx, const std::string fileName)
 	const auto pScene = imp.ReadFile(fileName.c_str(),
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
-		aiProcess_GenNormals
+		aiProcess_ConvertToLeftHanded |
+		aiProcess_GenNormals |
+		aiProcess_CalcTangentSpace
 	);
 
 	for (size_t i = 0; i < pScene->mNumMeshes; i++)
@@ -203,6 +205,8 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 		VertexLayout{}
 		.Append(VertexLayout::Position3D)
 		.Append(VertexLayout::Normal)
+		.Append(VertexLayout::Tangent)
+		.Append(VertexLayout::Bitangent)
 		.Append(VertexLayout::Texture2D)
 
 	));
@@ -213,6 +217,8 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 		vbuf.EmplaceBack(
 			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mVertices[i]),
 			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i]),
+			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mTangents[i]),
+			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mBitangents[i]),
 			* reinterpret_cast<dx::XMFLOAT2*>(&mesh.mTextureCoords[0][i])
 		);
 	}
@@ -232,13 +238,16 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 	std::vector<std::shared_ptr<Bindable>> bindablePtrs;
 
 	using namespace std::string_literals;
-	const auto base = "Models\\Rune_Hammer\\"s;
+	const auto base = "Models\\Rune_Hammer\\Textures\\"s;
 	std::string ALBEDO = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png";
-	
-	bindablePtrs.push_back(Texture::Resolve(gfx,ALBEDO));
+	std::string METALLIC = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png";
+	std::string NORMAL = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png";
 
-	//bindablePtrs.push_back(std::make_unique<Texture>(gfx, L"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",1));
+	bindablePtrs.push_back(Texture::Resolve(gfx,ALBEDO,0));
 
+	bindablePtrs.push_back(Texture::Resolve(gfx,METALLIC,1));
+
+	bindablePtrs.push_back(Texture::Resolve(gfx, NORMAL, 2));
 
 	bindablePtrs.push_back(Sampler::Resolve(gfx));
 
@@ -249,7 +258,7 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 
 	bindablePtrs.push_back(IndexBuffer::Resolve(gfx, meshTag, indices));
 	 
-	auto pvs = VertexShader::Resolve(gfx, "TexPhongVS.cso");
+	auto pvs = VertexShader::Resolve(gfx, "TexNormalSpecPhongVS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	bindablePtrs.push_back(std::move(pvs));
 
@@ -257,15 +266,16 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 	bindablePtrs.push_back(InputLayout::Resolve(gfx, vbuf.GetLayout(), pvsbc));
 
 
-	bindablePtrs.push_back(PixelShader::Resolve(gfx, "TexSpecPhongPS.cso"));
-
-	/*struct PSMaterialConstant
+	bindablePtrs.push_back(PixelShader::Resolve(gfx, "TexNormalSpecPhongPS.cso"));
+	struct PSMaterialConstant
 	{
 		float specularIntensity = 0.6f;
 		float specularPower = 30.0f;
-		float padding[2];
+		BOOL  normalMapEnabled = TRUE;
+		float padding[1];
 	} pmc;
-	bindablePtrs.push_back(std::make_unique<PixelConstantBuffer<PSMaterialConstant>>(gfx, pmc, 1u));*/
+
+	bindablePtrs.push_back(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
 }

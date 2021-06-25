@@ -30,5 +30,5 @@ float4 main(float3 worldPos : Position, float3 n : Normal,float2 tc : Texcoord) 
     const float3 w = n * dot(vTol, n);
     const float3 r = w * 2.0f - vTol;
     const float3 specular = att * (diffuseColor * diffuseIntensity) * specularIntensity * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower);
-    return float4(saturate((diffuse + ambient + specular) * tex.Sample(splr, tc).rgb), 1.0f);
+    return float4(saturate((diffuse + ambient) * tex.Sample(splr, tc).rgb) + specular, 1.0f);
 }

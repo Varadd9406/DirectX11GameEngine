@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "PointLight.h"
 #include "Mesh.h"
+#include "TestPlane.h"
 class App
 {
 	
@@ -23,6 +24,7 @@ private:
 	Camera cam;
 	PointLight light;
 	Model hammer_time{ wnd.Gfx(),"Models\\Rune_Hammer\\Rune_Hammer.fbx" };
+	//TestPlane plane;
 	struct
 	{
 		float roll = 0.0f;

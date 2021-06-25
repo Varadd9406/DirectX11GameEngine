@@ -29,5 +29,5 @@ float4 main(float3 worldPos : Position, float3 n : Normal, float2 tc : Texcoord)
     const float3 specularReflectionColor = specularSample.rgb;
     const float specularPower = pow(2.0f, specularSample.a * 13.0f);
     const float3 specular = att * (diffuseColor * diffuseIntensity) * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower);
-    return float4(saturate((diffuse + ambient) * tex.Sample(splr, tc).rgb + specular*specularPower ), 1.0f);
+    return float4(saturate((diffuse + ambient) * tex.Sample(splr, tc).rgb ), 1.0f);
 }

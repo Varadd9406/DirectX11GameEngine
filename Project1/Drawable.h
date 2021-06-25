@@ -14,6 +14,18 @@ public:
 	void Draw(Graphics& gfx) const ;
 	virtual ~Drawable() = default;
 protected:
+	template<class T>
+	T* QueryBindable()
+	{
+		for (auto& pb : binds)
+		{
+			if (auto pt = dynamic_cast<T*>(pb.get()))
+			{
+				return pt;
+			}
+		}
+		return nullptr;
+	}
 	void AddBind(std::shared_ptr<Bindable> bind);
 private:
 	const IndexBuffer* pIndexBuffer = nullptr;

@@ -15,6 +15,7 @@ public:
 	DirectX::XMMATRIX GetTransformXM() const override;
 private:
 	mutable DirectX::XMFLOAT4X4 transform;
+
 };
 
 class Node
@@ -48,6 +49,7 @@ private:
 	static std::unique_ptr<Mesh> ParseMesh(Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials);
 	std::unique_ptr<Node> ParseNode(int& nextId, const aiNode& node);
 private:
+
 	std::unique_ptr<Node> pRoot;
 	std::vector<std::unique_ptr<Mesh>> meshPtrs;
 	std::unique_ptr<class ModelWindow> pWindow;
