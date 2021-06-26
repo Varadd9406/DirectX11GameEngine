@@ -242,12 +242,17 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 	std::string ALBEDO = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png";
 	std::string METALLIC = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png";
 	std::string NORMAL = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png";
+	std::string EMISSION = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png";
+
 
 	bindablePtrs.push_back(Texture::Resolve(gfx,ALBEDO,0));
 
 	bindablePtrs.push_back(Texture::Resolve(gfx,METALLIC,1));
 
 	bindablePtrs.push_back(Texture::Resolve(gfx, NORMAL, 2));
+
+	bindablePtrs.push_back(Texture::Resolve(gfx, EMISSION, 3));
+
 
 	bindablePtrs.push_back(Sampler::Resolve(gfx));
 
@@ -266,7 +271,7 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 	bindablePtrs.push_back(InputLayout::Resolve(gfx, vbuf.GetLayout(), pvsbc));
 
 
-	bindablePtrs.push_back(PixelShader::Resolve(gfx, "TexNormalSpecPhongPS.cso"));
+	bindablePtrs.push_back(PixelShader::Resolve(gfx, "TexNormalSpecEmsPhongPS.cso"));
 	struct PSMaterialConstant
 	{
 		float specularIntensity = 0.6f;

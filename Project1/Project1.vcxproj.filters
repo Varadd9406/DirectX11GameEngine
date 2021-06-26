@@ -307,8 +307,12 @@
     <FxCompile Include="TexNormalPhongPS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="TexNormalSpecEmsPhongPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\readme.md" />
   </ItemGroup>
 </Project>
