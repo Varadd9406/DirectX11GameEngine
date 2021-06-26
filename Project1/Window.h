@@ -44,9 +44,18 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator= (const Window&) = delete;
+	void EnableCursor();
+	void DisableCursor();
+	bool CursorEnabled();
 	static std::optional<int> ProcessMessage();
 	Graphics& Gfx();
 private:
+	void ConfineCursor();
+	void FreeCursor();
+	void HideCursor();
+	void ShowCursor();
+	void EnableImGuiMouse();
+	void DisableImGuiMouse();
 	static LRESULT CALLBACK HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -54,10 +63,12 @@ public:
 	Keyboard kbd;
 	Mouse mouse;
 private:
+	int cursorEnabled = true;
 	int width;
 	int height;
 	HWND hWnd;
 	std::unique_ptr<Graphics> pGfx;
+	std::vector<BYTE> rawBuffer;
 };
 
 

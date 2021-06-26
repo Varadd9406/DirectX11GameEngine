@@ -17,6 +17,7 @@ private:
 	void DoFrame();
 	void ImguiStuff();
 private:
+	int x=0, y=0;
 	float speed_factor = 1.0f;
 	ImguiManager imgui;
 	Window wnd;

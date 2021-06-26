@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "imgui/imgui.h"
+#include "Utility.h"
+#include <algorithm>
 
 
 Camera::Camera()
@@ -49,4 +51,24 @@ void Camera::Reset()
 	pos = { 10.0f,2.0f,0.0f };
 	pitch = 0.0f;
 	yaw = -3.14f/2.0f;
+}
+
+void Camera::Rotate(float dx, float dy)
+{
+	yaw = wrap_angle(yaw + dx * rotationSpeed);
+	pitch = std::clamp(pitch + dy * rotationSpeed, 0.995f * -PI / 2.0f, 0.995f * PI / 2.0f);
+}
+
+void Camera::Translate(DirectX::XMFLOAT3 translation)
+{
+	DirectX::XMStoreFloat3(&translation, DirectX::XMVector3Transform(
+		DirectX::XMLoadFloat3(&translation),
+		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, 0.0f) *
+		DirectX::XMMatrixScaling(travelSpeed, travelSpeed, travelSpeed)
+	));
+	pos = {
+		pos.x + translation.x,
+		pos.y + translation.y,
+		pos.z + translation.z
+	};
 }

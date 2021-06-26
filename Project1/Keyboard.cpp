@@ -1,11 +1,10 @@
 #include "Keyboard.h"
-
 bool Keyboard::KeyIsPressed(unsigned char keycode) const
 {
 	return keystates[keycode];
 }
 
-Keyboard::Event Keyboard::ReadKey()
+std::optional<Keyboard::Event> Keyboard::ReadKey()
 {
 	if (keybuffer.size() > 0u)
 	{
@@ -13,10 +12,7 @@ Keyboard::Event Keyboard::ReadKey()
 		keybuffer.pop();
 		return e;
 	}
-	else
-	{
-		return Keyboard::Event();
-	}
+	return {};
 }
 
 bool Keyboard::KeyIsEmpty() const
@@ -24,7 +20,7 @@ bool Keyboard::KeyIsEmpty() const
 	return keybuffer.empty();
 }
 
-char Keyboard::ReadChar()
+std::optional<char> Keyboard::ReadChar()
 {
 	if (charbuffer.size() > 0u)
 	{
@@ -32,10 +28,7 @@ char Keyboard::ReadChar()
 		charbuffer.pop();
 		return charcode;
 	}
-	else
-	{
-		return 0;
-	}
+	return {};
 }
 
 bool Keyboard::CharIsEmpty() const

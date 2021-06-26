@@ -1,10 +1,14 @@
 #pragma once
 #include <queue>
-
+#include <optional>
 class Mouse
 {
 	friend class Window;
 public:
+	struct RawDelta
+	{
+		int x, y;
+	};
 	class Event
 	{
 	public:
@@ -94,15 +98,20 @@ public:
 	bool RightIsPressed() const;
 	bool MiddleIsPressed() const;
 	Mouse::Event Read();
+	std::optional<RawDelta> ReadRawDelta();
 	bool IsEmpty() const
 	{
 		return buffer.empty();
 	}
 	void Flush();
+	void EnableRaw();
+	void DisableRaw();
+	bool RawEnabled() const;
 private:
 	void OnMouseMove(int x, int y);
 	void OnMouseLeave();
 	void OnMouseEnter();
+	void OnRawDelta(int dx, int dy);
 	void OnLeftPressed(int x, int y);
 	void OnLeftReleased(int x, int y);
 	void OnRightPressed(int x, int y);
@@ -112,6 +121,7 @@ private:
 	void OnWheelUp(int x, int y);
 	void OnWheelDown(int x, int y);
 	void TrimBuffer();
+	void TrimRawInputBuffer();
 	void OnWheelDelta(int x, int y, int delta);
 private:
 	static constexpr unsigned int bufferSize = 16u;
@@ -122,5 +132,8 @@ private:
 	bool middleIsPressed = false;
 	bool isInWindow = false;
 	int wheelDeltaCarry = 0;
+	bool rawEnabled = false;
 	std::queue<Event> buffer;
+	std::queue<RawDelta> rawDeltaBuffer;
+
 };

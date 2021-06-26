@@ -8,8 +8,8 @@ public:
 	DirectX::XMMATRIX GetMatrix() const;
 	void SpawnControlWindow() ;
 	void Reset() ;
-	//void Rotate(float dx, float dy) ;
-	//void Translate(DirectX::XMFLOAT3 translation) ;
+	void Rotate(float dx, float dy) ;
+	void Translate(DirectX::XMFLOAT3 translation) ;
 private:
 	DirectX::XMFLOAT3 pos;
 	float pitch;
