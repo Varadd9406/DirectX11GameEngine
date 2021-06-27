@@ -1,6 +1,5 @@
 # DirectX Based Rasterization Engine
 This is a DirectX based rasterization engine.
-![Alt Text](https://github.com/Varadd9406/DirectX11GameEngine/blob/master/ReadmeStuff/engine.gif)
 
 
 ### Usage
@@ -10,6 +9,9 @@ Clone this repo in Visual Studio 2019 and Build it in x64 Debug mode.
 ### Current Capabilities
 The engine can currently be used to view a 3d model with normal mapping, diffuse lighting, specular highlighting and emissive lighting.
 It also supports free look mode using WASD and mouse.
+
+
+![Alt Text](https://github.com/Varadd9406/DirectX11GameEngine/blob/master/ReadmeStuff/engine.gif)
 
 
 ### TODO
