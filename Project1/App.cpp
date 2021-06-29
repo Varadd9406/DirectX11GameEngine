@@ -27,6 +27,7 @@ void App::DoFrame()
 
 	//Draw BS
 	hammer_time.Draw(wnd.Gfx());
+	sword_time.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
 	//plane.Draw(wnd.Gfx());
 
@@ -94,7 +95,9 @@ void App::DoFrame()
 	ImguiStuff();
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	hammer_time.ShowWindow();
+	hammer_time.ShowWindow("Hammer");
+	sword_time.ShowWindow("Sword");
+
 	//plane.SpawnControlWindow(wnd.Gfx());
 	wnd.Gfx().EndFrame();
 }

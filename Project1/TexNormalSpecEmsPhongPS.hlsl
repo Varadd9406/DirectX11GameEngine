@@ -9,13 +9,6 @@ cbuffer LightCbuf
     float attQuad;
 };
 
-cbuffer ObjectCbuf
-{
-    float specularIntensity;
-    float specularPower;
-    bool normalMapEnabled;
-    float padding[1];
-};
 
 cbuffer Cbuf
 {

@@ -24,7 +24,27 @@ private:
 	Timer timer;
 	Camera cam;
 	PointLight light;
-	Model hammer_time{ wnd.Gfx(),"Models\\Rune_Hammer\\Rune_Hammer.fbx" };
+	MODEL_DESC hammer_time_desc =
+	{
+		"Models\\Rune_Hammer\\Rune_Hammer.fbx",
+		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png",
+		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png",
+		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",
+		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png"
+
+	};
+	Model hammer_time{ wnd.Gfx(),hammer_time_desc };
+
+	MODEL_DESC sword_time_desc =
+	{
+		"Models\\Rune_Sword\\Rune_Sword.fbx",
+		"Models\\Rune_Sword\\Textures\\Rune_Sword_Albedo.png",
+		"Models\\Rune_Sword\\Textures\\Rune_Sword_Normal.png",
+		"Models\\Rune_Sword\\Textures\\Rune_Sword_Metallic.png",
+		"Models\\Rune_Sword\\Textures\\Rune_Sword_Emission.png"
+
+	};
+	Model sword_time{ wnd.Gfx(),sword_time_desc };
 	//TestPlane plane;
 	struct
 	{

@@ -158,12 +158,12 @@ private:
 	std::unordered_map<int, TransformParameters> transforms;
 };
 
-Model::Model(Graphics& gfx, const std::string fileName)
+Model::Model(Graphics& gfx, MODEL_DESC desc)
 	:
 	pWindow(std::make_unique<ModelWindow>())
 {
 	Assimp::Importer imp;
-	const auto pScene = imp.ReadFile(fileName.c_str(),
+	const auto pScene = imp.ReadFile(desc.model_path.c_str(),
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_ConvertToLeftHanded |
@@ -173,7 +173,7 @@ Model::Model(Graphics& gfx, const std::string fileName)
 
 	for (size_t i = 0; i < pScene->mNumMeshes; i++)
 	{
-		meshPtrs.push_back(ParseMesh(gfx, *pScene->mMeshes[i], pScene->mMaterials));
+		meshPtrs.push_back(ParseMesh(gfx, *pScene->mMeshes[i],desc));
 	}
 	int nextId = 0;
 	pRoot = ParseNode(nextId,*pScene->mRootNode);
@@ -196,7 +196,7 @@ void Model::ShowWindow(const char* windowName)
 Model::~Model() noexcept
 {}
 
-std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials)
+std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_DESC desc)
 {
 	namespace dx = DirectX;
 	using dymvtx::VertexLayout;
@@ -238,25 +238,19 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 	std::vector<std::shared_ptr<Bindable>> bindablePtrs;
 
 	using namespace std::string_literals;
-	const auto base = "Models\\Rune_Hammer\\Textures\\"s;
-	std::string ALBEDO = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png";
-	std::string METALLIC = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png";
-	std::string NORMAL = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png";
-	std::string EMISSION = "Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png";
 
+	bindablePtrs.push_back(Texture::Resolve(gfx, desc.albedo_path,0));
 
-	bindablePtrs.push_back(Texture::Resolve(gfx,ALBEDO,0));
+	bindablePtrs.push_back(Texture::Resolve(gfx, desc.specular_path,1));
 
-	bindablePtrs.push_back(Texture::Resolve(gfx,METALLIC,1));
+	bindablePtrs.push_back(Texture::Resolve(gfx, desc.normal_path, 2));
 
-	bindablePtrs.push_back(Texture::Resolve(gfx, NORMAL, 2));
-
-	bindablePtrs.push_back(Texture::Resolve(gfx, EMISSION, 3));
+	bindablePtrs.push_back(Texture::Resolve(gfx, desc.emission_path, 3));
 
 
 	bindablePtrs.push_back(Sampler::Resolve(gfx));
 
-	auto meshTag = base + "%"s + mesh.mName.C_Str();
+	auto meshTag = desc.model_path + "%"s + mesh.mName.C_Str();
 
 
 	bindablePtrs.push_back(VertexBuffer::Resolve(gfx, meshTag, vbuf));
@@ -272,15 +266,15 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const 
 
 
 	bindablePtrs.push_back(PixelShader::Resolve(gfx, "TexNormalSpecEmsPhongPS.cso"));
-	struct PSMaterialConstant
-	{
-		float specularIntensity = 0.6f;
-		float specularPower = 30.0f;
-		BOOL  normalMapEnabled = TRUE;
-		float padding[1];
-	} pmc;
+	//struct PSMaterialConstant
+	//{
+	//	float specularIntensity = 0.6f;
+	//	float specularPower = 30.0f;
+	//	BOOL  normalMapEnabled = TRUE;
+	//	float padding[1];
+	//} pmc;
 
-	bindablePtrs.push_back(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
+	//bindablePtrs.push_back(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
 }

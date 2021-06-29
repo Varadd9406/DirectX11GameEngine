@@ -7,6 +7,22 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+enum textureTypes
+{
+	TEX_ALBEDO = 0x1,
+	TEX_NORMAL = 0x2,
+	TEX_SPECULAR = 0x3,
+	TEX_EMISSIVITY = 0x4
+};
+struct MODEL_DESC
+{
+	std::string model_path;
+	std::string albedo_path;
+	std::string normal_path;
+	std::string specular_path;
+	std::string emission_path;
+};
+
 class Mesh : public Drawable
 {
 public:
@@ -41,12 +57,12 @@ private:
 class Model
 {
 public:
-	Model(Graphics& gfx, const std::string fileName);
+	Model(Graphics& gfx, MODEL_DESC desc);
 	void Draw(Graphics& gfx) const;
-	void ShowWindow(const char* windowName = nullptr);
+	void ShowWindow(const char* windowName);
 	~Model() ;
 private:
-	static std::unique_ptr<Mesh> ParseMesh(Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials);
+	static std::unique_ptr<Mesh> ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_DESC model);
 	std::unique_ptr<Node> ParseNode(int& nextId, const aiNode& node);
 private:
 
@@ -54,3 +70,4 @@ private:
 	std::vector<std::unique_ptr<Mesh>> meshPtrs;
 	std::unique_ptr<class ModelWindow> pWindow;
 };
+
