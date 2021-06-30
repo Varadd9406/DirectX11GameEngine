@@ -45,6 +45,18 @@ private:
 
 	};
 	Model sword_time{ wnd.Gfx(),sword_time_desc };
+
+	MODEL_DESC stryker_time_desc =
+	{
+		"Models\\Stryker\\Stryker.fbx",
+		"Models\\Stryker\\Textures\\Stryker_Albedo.png",
+		"Models\\Stryker\\Textures\\Stryker_Normal.png",
+		"Models\\Stryker\\Textures\\Stryker_Metallic.png",
+		"Models\\Stryker\\Textures\\Stryker_Emission.png"
+
+	};
+	Model stryker_time{ wnd.Gfx(),stryker_time_desc };
+
 	//TestPlane plane;
 	struct
 	{
