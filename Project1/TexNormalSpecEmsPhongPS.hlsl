@@ -40,19 +40,24 @@ float3 MapNormalViewSpace(const float3 tan, const float3 bitan,float3 viewNormal
     return normalize(mul(tanNormal, tanToView));
 }
 
-float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : BiTangent, float2 tc : Texcoord) : SV_Target
-{    
-    viewNormal = MapNormalViewSpace(tan, bitan, viewNormal, tc, nmap, splr);
-    
-    
+
+
+float3 diffuseCalculation(const float3 worldPos,const float3 viewNormal)
+{
     //Diffuse stuff(pretty mature)
     const float3 vTol = lightPos - worldPos;
     const float distTol = length(vTol);
     const float3 dirTol = vTol / distTol;
     const float att = 1.0f / (attConst + attLin * distTol + attQuad * (distTol * distTol));
-    const float3 diffuse = diffuseColor * diffuseIntensity * att * max(0.0f, dot(dirTol, viewNormal));
-    
-    
+    return diffuseColor * diffuseIntensity * att * max(0.0f, dot(dirTol, viewNormal));
+}
+
+float3 specularCalculation(const float3 worldPos,const float3 viewNormal,const float2 tc)
+{
+    const float3 vTol = lightPos - worldPos;
+    const float distTol = length(vTol);
+    const float3 dirTol = vTol / distTol;
+    const float att = 1.0f / (attConst + attLin * distTol + attQuad * (distTol * distTol));
     //Sketchy Specular Stuff(Needs Work)
     const float3 w = viewNormal * dot(vTol, viewNormal);
     const float3 r = w * 2.0f - vTol;
@@ -63,7 +68,25 @@ float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float3 tan :
     const float specularPower = pow(2.0f, ra * 13.0f);
     //const float3 specular = att * (diffuseColor * diffuseIntensity) * specularIntensity * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower);
     
-    const float3 specular = (att * (diffuseColor * diffuseIntensity) * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower)) * specularReflectionColor;
+    return (att * (diffuseColor * diffuseIntensity) * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower)) * specularReflectionColor;
+}
+
+float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : BiTangent, float2 tc : Texcoord) : SV_Target
+{    
+    //Create unit normals
+    viewNormal = MapNormalViewSpace(tan, bitan, viewNormal, tc, nmap, splr);
+    
+    //Calculate Diffuse lighting
+    const float3 diffuse = diffuseCalculation(worldPos, viewNormal);
+    
+    //Calculate Specular lighting
+    const float3 specular = specularCalculation(worldPos, viewNormal, tc);
+    
+    //Calculate emissive lighting
+    const float3 emission = ems.Sample(splr, tc).rgb;
+    
+    
+
     //const float a = spec.Sample(splr, tc).r;
-    return float4(saturate((diffuse + ambient) * tex.Sample(splr, tc).rgb + specular + ems.Sample(splr, tc).rgb), 1.0f);
+    return float4(saturate((diffuse + ambient) * tex.Sample(splr, tc).rgb + specular +  emission), 1.0f);
 }
