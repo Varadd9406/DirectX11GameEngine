@@ -40,6 +40,12 @@
     <Filter Include="Shaders\VertexShaders">
       <UniqueIdentifier>{83f638e4-d192-42d0-86ba-635744bc4d7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Headers">
+      <UniqueIdentifier>{e896fa6d-386b-4427-b3aa-32765af9f329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\ComputeShaders">
+      <UniqueIdentifier>{5a2740ce-b5fa-4dd4-b8af-d931216576bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -320,5 +326,11 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="..\readme.md" />
+    <None Include="PointLight.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
+    <None Include="ShaderOps.hlsli">
+      <Filter>Shaders\Headers</Filter>
+    </None>
   </ItemGroup>
 </Project>
