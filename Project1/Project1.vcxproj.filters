@@ -34,6 +34,12 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{9648355f-4059-40b6-8526-fd825ca0f8ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\PixelShaders">
+      <UniqueIdentifier>{1eab26a7-4e70-491e-a5b9-25f2eedc9987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\VertexShaders">
+      <UniqueIdentifier>{83f638e4-d192-42d0-86ba-635744bc4d7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -278,37 +284,37 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PhongPS.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
     <FxCompile Include="PhongVS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="SolidVS.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="SolidPS.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="TexPhongVS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="TexPhongPS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="TexSpecPhongPS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="TexNormalSpecPhongPS.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="TexNormalSpecPhongVS.hlsl">
-      <Filter>Shaders</Filter>
+    <FxCompile Include="SolidVS.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="TexNormalPhongPS.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
     <FxCompile Include="TexNormalSpecEmsPhongPS.hlsl">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexNormalSpecPhongPS.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexNormalSpecPhongVS.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexPhongPS.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexPhongVS.hlsl">
+      <Filter>Shaders\VertexShaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexSpecPhongPS.hlsl">
+      <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

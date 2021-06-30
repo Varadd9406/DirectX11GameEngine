@@ -15,7 +15,7 @@ VSout main( float3 pos : POSITION,float3 n:Normal )
 {
     VSout vso;
     vso.worldPos = (float3) mul(float4(pos, 1.0f), modelView);
-    vso.viewNormal = mul(n, (float3x3) modelView);
+    vso.viewNormal = normalize(mul(n, (float3x3) modelView));
     vso.pos = mul(float4(pos, 1.0f), modelViewProj);
 	return vso;
 }

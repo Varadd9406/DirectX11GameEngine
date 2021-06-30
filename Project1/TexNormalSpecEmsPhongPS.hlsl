@@ -23,20 +23,26 @@ Texture2D ems : register(t3);
 
 SamplerState splr;
 
-float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : BiTangent, float2 tc : Texcoord) : SV_Target
+
+float3 MapNormalViewSpace(const float3 tan, const float3 bitan,float3 viewNormal, const float2 tc, Texture2D nmap, SamplerState splr)
 {
-    //Tangent Normals(crtl+c/v)
+    // build the tranform (rotation) into tangent space
     const float3x3 tanToView = float3x3(
         normalize(tan),
         normalize(bitan),
         normalize(viewNormal)
     );
-    // unpack normal data
+    // sample and unpack the normal from texture into tangent space   
     const float3 normalSample = nmap.Sample(splr, tc).xyz;
+    const float3 tanNormal = normalSample * 2.0f - 1.0f;
     viewNormal = -1.0f + normalSample * 2.0f;
-    viewNormal.y = -viewNormal.y;
     // bring normal from tanspace into view space
-    viewNormal = mul(viewNormal, tanToView);
+    return normalize(mul(tanNormal, tanToView));
+}
+
+float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : BiTangent, float2 tc : Texcoord) : SV_Target
+{    
+    viewNormal = MapNormalViewSpace(tan, bitan, viewNormal, tc, nmap, splr);
     
     
     //Diffuse stuff(pretty mature)
