@@ -43,9 +43,6 @@
     <Filter Include="Shaders\Headers">
       <UniqueIdentifier>{e896fa6d-386b-4427-b3aa-32765af9f329}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\ComputeShaders">
-      <UniqueIdentifier>{5a2740ce-b5fa-4dd4-b8af-d931216576bc}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">

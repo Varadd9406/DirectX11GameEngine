@@ -26,6 +26,7 @@ private:
 	PointLight light;
 	MODEL_DESC hammer_time_desc =
 	{
+		1.0f,
 		"Models\\Rune_Hammer\\Rune_Hammer.fbx",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png",
@@ -37,6 +38,7 @@ private:
 
 	MODEL_DESC sword_time_desc =
 	{
+		1.0f,
 		"Models\\Rune_Sword\\Rune_Sword.fbx",
 		"Models\\Rune_Sword\\Textures\\Rune_Sword_Albedo.png",
 		"Models\\Rune_Sword\\Textures\\Rune_Sword_Normal.png",
@@ -48,6 +50,7 @@ private:
 
 	MODEL_DESC stryker_time_desc =
 	{
+		0.7f,
 		"Models\\Stryker\\Stryker.fbx",
 		"Models\\Stryker\\Textures\\Stryker_Albedo.png",
 		"Models\\Stryker\\Textures\\Stryker_Normal.png",

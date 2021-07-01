@@ -215,7 +215,7 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 	for (unsigned int i = 0; i < mesh.mNumVertices; i++)
 	{
 		vbuf.EmplaceBack(
-			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mVertices[i]),
+			dx::XMFLOAT3(mesh.mVertices[i].x * desc.scale, mesh.mVertices[i].y * desc.scale, mesh.mVertices[i].z * desc.scale),
 			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i]),
 			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mTangents[i]),
 			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mBitangents[i]),

@@ -16,6 +16,7 @@ enum textureTypes
 };
 struct MODEL_DESC
 {
+	float scale = 1.0f;
 	std::string model_path;
 	std::string albedo_path;
 	std::string normal_path;
