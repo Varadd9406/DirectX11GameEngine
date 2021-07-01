@@ -18,6 +18,8 @@ cbuffer ObjectCbuf
 
 float4 main(float3 worldPos: Position, float3 viewNormal : Normal) :SV_Target
 {
+    
+    viewNormal = normalize(viewNormal);
 	const float3 vTol = lightPos - worldPos;
 	const float distTol = length(vTol);
 	const float3 dirTol = vTol / distTol;

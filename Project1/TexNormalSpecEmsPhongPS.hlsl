@@ -20,6 +20,8 @@ SamplerState splr;
 
 float4 main(float3 viewPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : BiTangent, float2 tc : Texcoord) : SV_Target
 {    
+    
+    viewNormal = normalize(viewNormal);
     //Fragment to light
     //const float3 viewFragToL = viewLightPos - viewPos;
     //const float distFragToL = length(viewFragToL);

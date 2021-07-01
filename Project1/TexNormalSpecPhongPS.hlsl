@@ -31,6 +31,9 @@ SamplerState splr;
 
 float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : BiTangent, float2 tc : Texcoord) : SV_Target
 {
+    
+    viewNormal = normalize(viewNormal);
+    
     //Tangent Normals(crtl+c/v)
     const float3x3 tanToView = float3x3(
         normalize(tan),

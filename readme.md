@@ -15,7 +15,7 @@ It also supports free look mode using WASD and mouse.
 
 
 ### TODO
-1. Fix Release Mode in Visual Studio
+1. ~~Fix Release Mode in Visual Studio~~
 2. Implement rendering queue system
 3. Port to DirectX 12.
 4. Implement Ray Tracing Shaders.
