@@ -46,7 +46,7 @@ float4 main(float3 viewPos : Position, float3 viewNormal : Normal, float3 tan : 
     const float specularIntensity = 1.0f;
     
     
-    const float3 specular = specularMapCalculation(viewPos, viewNormal, viewLightPos, specularReflectionColor, specularIntensity, specularIntensity, att) ;
+    const float3 specular = specularMapCalculation(viewPos, viewNormal, viewLightPos, specularReflectionColor, specularIntensity, specularPower, att);
     
     //Calculate emissive light color
     const float3 emission = ems.Sample(splr, tc).rgb;

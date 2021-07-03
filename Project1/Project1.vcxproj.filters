@@ -307,7 +307,7 @@
     <FxCompile Include="TexNormalSpecPhongPS.hlsl">
       <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="TexNormalSpecPhongVS.hlsl">
+    <FxCompile Include="TexNormalPhongVS.hlsl">
       <Filter>Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="TexPhongPS.hlsl">

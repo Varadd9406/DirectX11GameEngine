@@ -17,11 +17,11 @@ enum textureTypes
 struct MODEL_DESC
 {
 	float scale = 1.0f;
-	std::string model_path;
-	std::string albedo_path;
-	std::string normal_path;
-	std::string specular_path;
-	std::string emission_path;
+	std::string model_path = nullptr;
+	std::string albedo_path = nullptr;
+	std::string normal_path = nullptr;
+	std::string specular_path = nullptr;
+	std::string emission_path = nullptr;
 };
 
 class Mesh : public Drawable
@@ -42,6 +42,7 @@ public:
 	Node(int id, const std::string& name, std::vector<Mesh*> meshPtrs, const DirectX::XMMATRIX& transform);
 	void Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const;
 	void SetAppliedTransform(DirectX::FXMMATRIX transform);
+	const DirectX::XMFLOAT4X4& GetAppliedTransform() const;
 	int GetId() const;
 	void ShowTree(Node*& pSelectedNode) const;
 private:
@@ -61,6 +62,7 @@ public:
 	Model(Graphics& gfx, MODEL_DESC desc);
 	void Draw(Graphics& gfx) const;
 	void ShowWindow(const char* windowName);
+	void SetRootTransform(DirectX::FXMMATRIX tf);
 	~Model() ;
 private:
 	static std::unique_ptr<Mesh> ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_DESC model);

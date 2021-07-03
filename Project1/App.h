@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "Timer.h"
-#include<memory>
+#include <memory>
 #include "ImguiManger.h"
 #include "Camera.h"
 #include "PointLight.h"
@@ -36,17 +36,17 @@ private:
 	};
 	Model hammer_time{ wnd.Gfx(),hammer_time_desc };
 
-	MODEL_DESC sword_time_desc =
-	{
-		1.0f,
-		"Models\\Rune_Sword\\Rune_Sword.fbx",
-		"Models\\Rune_Sword\\Textures\\Rune_Sword_Albedo.png",
-		"Models\\Rune_Sword\\Textures\\Rune_Sword_Normal.png",
-		"Models\\Rune_Sword\\Textures\\Rune_Sword_Metallic.png",
-		"Models\\Rune_Sword\\Textures\\Rune_Sword_Emission.png"
+	//MODEL_DESC sword_time_desc =
+	//{
+	//	1.0f,
+	//	"Models\\Rune_Sword\\Rune_Sword.fbx",
+	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Albedo.png",
+	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Normal.png",
+	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Metallic.png",
+	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Emission.png"
 
-	};
-	Model sword_time{ wnd.Gfx(),sword_time_desc };
+	//};
+	//Model sword_time{ wnd.Gfx(),sword_time_desc };
 
 	MODEL_DESC stryker_time_desc =
 	{
@@ -59,6 +59,18 @@ private:
 
 	};
 	Model stryker_time{ wnd.Gfx(),stryker_time_desc };
+
+	//MODEL_DESC plane_desc =
+	//{
+	//	0.1f,
+	//	"Models\\Plank\\Stryker.fbx",
+	//	"Models\\Stryker\\Textures\\Stryker_Albedo.png",
+	//	"Models\\Stryker\\Textures\\Stryker_Normal.png",
+	//	"Models\\Stryker\\Textures\\Stryker_Metallic.png",
+	//	"Models\\Stryker\\Textures\\Stryker_Emission.png"
+
+	//};
+	//Model plane{ wnd.Gfx(),plane_desc };
 
 	//TestPlane plane;
 	struct

@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <sstream>
 #include <iostream>
+#include "Utility.h"
 namespace dx = DirectX;
 
 
@@ -94,6 +95,10 @@ void Node::SetAppliedTransform(DirectX::FXMMATRIX transform)
 {
 	dx::XMStoreFloat4x4(&appliedTransform, transform);
 }
+const DirectX::XMFLOAT4X4& Node::GetAppliedTransform() const
+{
+	return appliedTransform;
+}
 
 int Node::GetId() const
 {
@@ -119,7 +124,23 @@ public:
 			ImGui::NextColumn();
 			if (pSelectedNode != nullptr)
 			{
-				auto& transform = transforms[pSelectedNode->GetId()];
+				const auto id = pSelectedNode->GetId();
+				auto i = transforms.find(id);
+				if (i == transforms.end())
+				{
+					const auto& applied = pSelectedNode->GetAppliedTransform();
+					const auto angles = ExtractEulerAngles(applied);
+					const auto translation = ExtractTranslation(applied);
+					TransformParameters tp;
+					tp.roll = angles.x;
+					tp.pitch = angles.y;
+					tp.yaw = angles.z;
+					tp.x = translation.x;
+					tp.y = translation.y;
+					tp.z = translation.z;
+					std::tie(i, std::ignore) = transforms.insert({ id,tp });
+				}
+				auto& transform = i->second;
 				ImGui::Text("Orientation");
 				ImGui::SliderAngle("Roll", &transform.roll, -180.0f, 180.0f);
 				ImGui::SliderAngle("Pitch", &transform.pitch, -180.0f, 180.0f);
@@ -136,9 +157,7 @@ public:
 	{
 		assert(pSelectedNode != nullptr);
 		const auto& transform = transforms.at(pSelectedNode->GetId());
-		return
-			dx::XMMatrixRotationRollPitchYaw(transform.roll, transform.pitch, transform.yaw) *
-			dx::XMMatrixTranslation(transform.x, transform.y, transform.z);
+		return TransformationMatrix(transform.roll,transform.pitch, transform.yaw, transform.x, transform.y, transform.z);
 	}
 	Node* GetSelectedNode() const
 	{
@@ -191,6 +210,11 @@ void Model::Draw(Graphics& gfx) const
 void Model::ShowWindow(const char* windowName)
 {
 	pWindow->Show(windowName, *pRoot);
+}
+
+void Model::SetRootTransform(DirectX::FXMMATRIX tf)
+{
+	pRoot->SetAppliedTransform(tf);
 }
 
 Model::~Model() noexcept
@@ -257,7 +281,7 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 
 	bindablePtrs.push_back(IndexBuffer::Resolve(gfx, meshTag, indices));
 	 
-	auto pvs = VertexShader::Resolve(gfx, "TexNormalSpecPhongVS.cso");
+	auto pvs = VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	bindablePtrs.push_back(std::move(pvs));
 

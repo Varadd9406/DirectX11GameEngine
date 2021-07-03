@@ -1,9 +1,10 @@
 #include "App.h"
-#include<sstream>
-#include<random>
+#include "Utility.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx11.h"
+#include<sstream>
+#include<random>
 
 
 App::App()
@@ -11,6 +12,8 @@ App::App()
 	wnd(1280, 720, "Honey I'm Home"),
 	light(wnd.Gfx())
 {
+	auto transform = TransformationMatrix(1, 2, 3, 4, 4, 2);
+	hammer_time.SetRootTransform(transform);
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 9.0f / 16.0f, 0.5f, 100.0f));
 }
 
@@ -27,10 +30,8 @@ void App::DoFrame()
 
 	//Draw BS
 	hammer_time.Draw(wnd.Gfx());
-	sword_time.Draw(wnd.Gfx());
 	stryker_time.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
-	//plane.Draw(wnd.Gfx());
 
 
 	while (const auto e = wnd.kbd.ReadKey())
@@ -97,11 +98,9 @@ void App::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	hammer_time.ShowWindow("Hammer");
-	sword_time.ShowWindow("Sword");
 	stryker_time.ShowWindow("Stryker");
 
 
-	//plane.SpawnControlWindow(wnd.Gfx());
 	wnd.Gfx().EndFrame();
 }
 

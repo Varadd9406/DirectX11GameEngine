@@ -11,10 +11,12 @@ InputLayout::InputLayout(Graphics& gfx,
 	INFOMAN(gfx);
 	const auto d3dLayout = layout.GetD3DLayout();
 
-	DX_EXCEPT_THROW(GetDevice(gfx)->CreateInputLayout(
-		d3dLayout.data(), (UINT)d3dLayout.size(),
-		pVertexShaderBytecode->GetBufferPointer(),
-		pVertexShaderBytecode->GetBufferSize(),
+	auto device = GetDevice(gfx);
+	auto p1 = d3dLayout.data();
+	auto p2 = (UINT)d3dLayout.size();
+	auto p3 = pVertexShaderBytecode->GetBufferPointer();
+	auto p4 = pVertexShaderBytecode->GetBufferSize();
+	DX_EXCEPT_THROW(device->CreateInputLayout(p1,p2,p3,p4,
 		&pInputLayout
 	));
 }

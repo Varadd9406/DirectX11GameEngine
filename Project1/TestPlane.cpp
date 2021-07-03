@@ -13,14 +13,14 @@ TestPlane::TestPlane(Graphics& gfx, float size)
 	AddBind(VertexBuffer::Resolve(gfx, geometryTag, model.vertices));
 	AddBind(IndexBuffer::Resolve(gfx, geometryTag, model.indices));
 
-	AddBind(Texture::Resolve(gfx, "Models\\Image\\Bricks_basecolor.jpg"));
-	AddBind(Texture::Resolve(gfx, "Models\\Image\\Bricks_normal.jpg", 1u));
+	AddBind(Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Albedo.tga",0u));
+	AddBind(Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Normal.tga", 1u));
 
-	auto pvs = VertexShader::Resolve(gfx, "TexPhongVS.cso");
+	auto pvs = VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	AddBind(std::move(pvs));
 
-	AddBind(PixelShader::Resolve(gfx, "TexNMapPhongPS.cso"));
+	AddBind(PixelShader::Resolve(gfx, "TexNormalPhongPS.cso"));
 
 	// this is CLEARLY an issue... all meshes will share same mat const, but may have different
 	// Ns (specular power) specified for each in the material properties... bad conflict
