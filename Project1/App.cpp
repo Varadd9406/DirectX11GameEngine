@@ -13,7 +13,8 @@ App::App()
 	light(wnd.Gfx())
 {
 	auto transform = TransformationMatrix(1, 2, 3, 4, 4, 2);
-	hammer_time.SetRootTransform(transform);
+	//hammer_time.SetRootTransform(transform);
+
 	wnd.Gfx().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 9.0f / 16.0f, 0.5f, 100.0f));
 }
 
@@ -30,7 +31,7 @@ void App::DoFrame()
 
 	//Draw BS
 	hammer_time.Draw(wnd.Gfx());
-	stryker_time.Draw(wnd.Gfx());
+	plank.Draw(wnd.Gfx());
 	light.Draw(wnd.Gfx());
 
 
@@ -98,7 +99,7 @@ void App::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	hammer_time.ShowWindow("Hammer");
-	stryker_time.ShowWindow("Stryker");
+	plank.ShowWindow("Plank");
 
 
 	wnd.Gfx().EndFrame();

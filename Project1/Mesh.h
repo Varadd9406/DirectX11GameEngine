@@ -17,11 +17,11 @@ enum textureTypes
 struct MODEL_DESC
 {
 	float scale = 1.0f;
-	std::string model_path = nullptr;
-	std::string albedo_path = nullptr;
-	std::string normal_path = nullptr;
-	std::string specular_path = nullptr;
-	std::string emission_path = nullptr;
+	std::string model_path = "-1";
+	std::string diffuse_path = "-1";
+	std::string normal_path = "-1";
+	std::string specular_path = "-1";
+	std::string emission_path = "-1";
 };
 
 class Mesh : public Drawable

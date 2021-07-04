@@ -18,6 +18,7 @@ Texture::Texture(Graphics& gfx, std::string path, UINT slot)
 	DirectX::CreateWICTextureFromFile
 	(
 		GetDevice(gfx),
+		GetContext(gfx),
 		std::wstring{ path.begin(),path.end()}.c_str(),
 		nullptr,
 		&pTextureView

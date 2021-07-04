@@ -1,4 +1,4 @@
-cbuffer LightCbuf
+cbuffer LightCbuf : register(b0)
 {
     float3 viewLightPos;
     float3 ambient;

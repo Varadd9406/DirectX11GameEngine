@@ -31,46 +31,21 @@ private:
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",
-		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png"
+		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png",
 
 	};
 	Model hammer_time{ wnd.Gfx(),hammer_time_desc };
 
-	//MODEL_DESC sword_time_desc =
-	//{
-	//	1.0f,
-	//	"Models\\Rune_Sword\\Rune_Sword.fbx",
-	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Albedo.png",
-	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Normal.png",
-	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Metallic.png",
-	//	"Models\\Rune_Sword\\Textures\\Rune_Sword_Emission.png"
-
-	//};
-	//Model sword_time{ wnd.Gfx(),sword_time_desc };
-
-	MODEL_DESC stryker_time_desc =
+	MODEL_DESC plank_desc =
 	{
-		0.7f,
-		"Models\\Stryker\\Stryker.fbx",
-		"Models\\Stryker\\Textures\\Stryker_Albedo.png",
-		"Models\\Stryker\\Textures\\Stryker_Normal.png",
-		"Models\\Stryker\\Textures\\Stryker_Metallic.png",
-		"Models\\Stryker\\Textures\\Stryker_Emission.png"
-
+		1.0f,
+		"Models\\Plank\\Plank.obj",
+		"Models\\Plank\\Textures\\Planks_albedo_2k.png",
+		"Models\\Plank\\Textures\\Planks_normal_2k.png",
+		"-1",
+		"-1",
 	};
-	Model stryker_time{ wnd.Gfx(),stryker_time_desc };
-
-	//MODEL_DESC plane_desc =
-	//{
-	//	0.1f,
-	//	"Models\\Plank\\Stryker.fbx",
-	//	"Models\\Stryker\\Textures\\Stryker_Albedo.png",
-	//	"Models\\Stryker\\Textures\\Stryker_Normal.png",
-	//	"Models\\Stryker\\Textures\\Stryker_Metallic.png",
-	//	"Models\\Stryker\\Textures\\Stryker_Emission.png"
-
-	//};
-	//Model plane{ wnd.Gfx(),plane_desc };
+	Model plank{ wnd.Gfx(),plank_desc };
 
 	//TestPlane plane;
 	struct

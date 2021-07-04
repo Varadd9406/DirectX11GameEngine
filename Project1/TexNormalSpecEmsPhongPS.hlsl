@@ -2,10 +2,19 @@
 #include "ShaderOps.hlsli"
 
 
-cbuffer Cbuf
+cbuffer Cbuf : register(b2)
 {
     matrix modelView;
     matrix modelViewProj;
+};
+
+cbuffer Maps : register(b7)
+{
+    bool hasDiffuseMap;
+    bool hasSpecularMap;
+    bool hasNormalMap;
+    bool hasEmissiveMap;
+
 };
 
 Texture2D tex : register(t0);
@@ -49,7 +58,15 @@ float4 main(float3 viewPos : Position, float3 viewNormal : Normal, float3 tan : 
     const float3 specular = specularMapCalculation(viewPos, viewNormal, viewLightPos, specularReflectionColor, specularIntensity, specularPower, att);
     
     //Calculate emissive light color
-    const float3 emission = ems.Sample(splr, tc).rgb;
+    float3 emission;
+    if(hasEmissiveMap)
+    {
+        emission = ems.Sample(splr, tc).rgb;
+    }
+    else
+    {
+        emission = float3(0.0f, 0.0f, 0.0f);
+    }
     
 
     //const float a = spec.Sample(splr, tc).r;

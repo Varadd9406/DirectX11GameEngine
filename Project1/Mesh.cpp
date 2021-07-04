@@ -222,6 +222,12 @@ Model::~Model() noexcept
 
 std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_DESC desc)
 {
+	bool hasDiffuseMap = (desc.diffuse_path != "-1");
+	bool hasSpecularMap = (desc.specular_path != "-1");
+	bool hasNormalMap = (desc.normal_path != "-1");
+	bool hasEmissiveMap = (desc.emission_path != "-1");
+
+
 	namespace dx = DirectX;
 	using dymvtx::VertexLayout;
 
@@ -262,15 +268,22 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 	std::vector<std::shared_ptr<Bindable>> bindablePtrs;
 
 	using namespace std::string_literals;
-
-	bindablePtrs.push_back(Texture::Resolve(gfx, desc.albedo_path,0));
-
-	bindablePtrs.push_back(Texture::Resolve(gfx, desc.specular_path,1));
-
-	bindablePtrs.push_back(Texture::Resolve(gfx, desc.normal_path, 2));
-
-	bindablePtrs.push_back(Texture::Resolve(gfx, desc.emission_path, 3));
-
+	if (hasDiffuseMap)
+	{
+		bindablePtrs.push_back(Texture::Resolve(gfx, desc.diffuse_path, 0));
+	}
+	if (hasSpecularMap)
+	{
+		bindablePtrs.push_back(Texture::Resolve(gfx, desc.specular_path, 1));
+	}
+	if (hasNormalMap)
+	{
+		bindablePtrs.push_back(Texture::Resolve(gfx, desc.normal_path, 2));
+	}
+	if (hasEmissiveMap)
+	{
+		bindablePtrs.push_back(Texture::Resolve(gfx, desc.emission_path, 3));
+	}
 
 	bindablePtrs.push_back(Sampler::Resolve(gfx));
 
@@ -299,6 +312,23 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 	//} pmc;
 
 	//bindablePtrs.push_back(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
+	struct PSMaps
+	{
+		BOOL b1;
+		BOOL b2;
+		BOOL b3;
+		BOOL b4;
+	};
+
+	PSMaps psm =
+	{
+		 hasDiffuseMap,
+		 hasSpecularMap,
+		 hasNormalMap,
+		 hasEmissiveMap
+	};
+
+	bindablePtrs.push_back(std::make_shared<PixelConstantBuffer<PSMaps>>(gfx, psm, 7u));
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
 }
