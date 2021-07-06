@@ -27,12 +27,11 @@ private:
 	MODEL_DESC hammer_time_desc =
 	{
 		1.0f,
-		"Models\\Rune_Hammer\\Rune_Hammer.fbx",
+		"Models\\Rune_Hammer\\Rune_Hammer.obj",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",
 		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png",
-
 	};
 	Model hammer_time{ wnd.Gfx(),hammer_time_desc };
 
@@ -47,7 +46,6 @@ private:
 	};
 	Model plank{ wnd.Gfx(),plank_desc };
 
-	//TestPlane plane;
 	struct
 	{
 		float roll = 0.0f;

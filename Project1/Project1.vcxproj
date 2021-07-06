@@ -185,6 +185,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="DxgiManager.cpp" />
+    <ClCompile Include="DynamicConstant.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="ImguiManager.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LayoutCodex.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PixelShader.cpp" />
@@ -222,8 +224,10 @@
     <ClInclude Include="BindableCodex.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConstantBuffers.h" />
+    <ClInclude Include="ConstantBuffersEx.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="DxgiManager.h" />
+    <ClInclude Include="DynamicConstant.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GraphicsThrowMacros.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -238,6 +242,7 @@
     <ClInclude Include="ImguiManger.h" />
     <ClInclude Include="IndexedTriangleList.h" />
     <ClInclude Include="InputLayout.h" />
+    <ClInclude Include="LayoutCodex.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Plane.h" />

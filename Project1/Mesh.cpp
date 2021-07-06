@@ -4,6 +4,10 @@
 #include <sstream>
 #include <iostream>
 #include "Utility.h"
+#include "DynamicConstant.h"
+#include "ConstantBuffersEx.h"
+#include "LayoutCodex.h"
+
 namespace dx = DirectX;
 
 
@@ -312,23 +316,21 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 	//} pmc;
 
 	//bindablePtrs.push_back(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
-	struct PSMaps
-	{
-		BOOL b1;
-		BOOL b2;
-		BOOL b3;
-		BOOL b4;
-	};
+	Dcb::RawLayout lay;
+	lay.Add<Dcb::Bool>("hasDiffuseMap");
+	lay.Add<Dcb::Bool>("hasSpecularMap");
+	lay.Add<Dcb::Bool>("hasNormalMap");
+	lay.Add<Dcb::Bool>("hasEmissiveMap");
 
-	PSMaps psm =
-	{
-		 hasDiffuseMap,
-		 hasSpecularMap,
-		 hasNormalMap,
-		 hasEmissiveMap
-	};
+	auto buf = Dcb::Buffer(std::move(lay));
 
-	bindablePtrs.push_back(std::make_shared<PixelConstantBuffer<PSMaps>>(gfx, psm, 7u));
+	buf["hasDiffuseMap"] = hasDiffuseMap;
+	buf["hasSpecularMap"] = hasSpecularMap;
+	buf["hasNormalMap"] = hasNormalMap;
+	buf["hasEmissiveMap"] = hasEmissiveMap;
+
+	bindablePtrs.push_back(std::make_shared<NocachePixelConstantBufferEX>(gfx, buf, 7u));
+	//bindablePtrs.push_back(std::make_shared<PixelConstantBuffer<PSMaps>>(gfx, psm, 7u));
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
 }
