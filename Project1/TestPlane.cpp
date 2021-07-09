@@ -10,28 +10,28 @@ TestPlane::TestPlane(Graphics& gfx, float size)
 	auto model = Plane::Make();
 	model.Transform(dx::XMMatrixScaling(size, size, 1.0f));
 	const auto geometryTag = "$plane." + std::to_string(size);
-	AddBind(VertexBuffer::Resolve(gfx, geometryTag, model.vertices));
-	AddBind(IndexBuffer::Resolve(gfx, geometryTag, model.indices));
+	AddBind(bind::VertexBuffer::Resolve(gfx, geometryTag, model.vertices));
+	AddBind(bind::IndexBuffer::Resolve(gfx, geometryTag, model.indices));
 
-	AddBind(Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Albedo.tga",0u));
-	AddBind(Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Normal.tga", 1u));
+	AddBind(bind::Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Albedo.tga",0u));
+	AddBind(bind::Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Normal.tga", 1u));
 
-	auto pvs = VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
+	auto pvs = bind::VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	AddBind(std::move(pvs));
 
-	AddBind(PixelShader::Resolve(gfx, "TexNormalPhongPS.cso"));
+	AddBind(bind::PixelShader::Resolve(gfx, "TexNormalPhongPS.cso"));
 
 	// this is CLEARLY an issue... all meshes will share same mat const, but may have different
 	// Ns (specular power) specified for each in the material properties... bad conflict
 
-	AddBind(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
+	AddBind(bind::PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
 
-	AddBind(InputLayout::Resolve(gfx, model.vertices.GetLayout(), pvsbc));
+	AddBind(bind::InputLayout::Resolve(gfx, model.vertices.GetLayout(), pvsbc));
 
-	AddBind(Topology::Resolve(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+	AddBind(bind::Topology::Resolve(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
-	AddBind(std::make_shared<TransformCbuf2>(gfx, *this,0u,2u));
+	AddBind(std::make_shared<bind::TransformCbuf2>(gfx, *this,0u,2u));
 }
 
 void TestPlane::SetPos(DirectX::XMFLOAT3 pos) noexcept
@@ -72,7 +72,7 @@ void TestPlane::SpawnControlWindow(Graphics& gfx) noexcept
 		pmc.normalMappingEnabled = checkState ? TRUE : FALSE;
 		if (changed2)
 		{
-			QueryBindable<PixelConstantBuffer<PSMaterialConstant>>()->Update(gfx, pmc);
+			QueryBindable<bind::PixelConstantBuffer<PSMaterialConstant>>()->Update(gfx, pmc);
 		}
 	}
 	ImGui::End();

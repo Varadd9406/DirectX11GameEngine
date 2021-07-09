@@ -9,9 +9,16 @@
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"D3DCompiler.lib")
 
+
+namespace bind
+{
+	class Bindable;
+}
+
+
 class Graphics
 {
-	friend class Bindable;
+	friend bind::Bindable;
 public:
 	class Exception : public WinException
 	{

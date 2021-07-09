@@ -4,22 +4,25 @@
 #include <DirectXMath.h>
 #include <memory>
 
-class TransformCbuf : public Bindable
+namespace bind
 {
-protected:
-	struct Transforms
+	class TransformCbuf : public Bindable
 	{
-		DirectX::XMMATRIX modelView;
-		DirectX::XMMATRIX modelViewProj;
-	};
-public:
-	TransformCbuf(Graphics& gfx, const Drawable& parent,UINT slot = 0u);
-	void Bind(Graphics& gfx) override;
-protected:
-	void UpdateBindImpl(Graphics& gfx, const Transforms& tf);
-	Transforms GetTransforms(Graphics& gfx);
+	protected:
+		struct Transforms
+		{
+			DirectX::XMMATRIX modelView;
+			DirectX::XMMATRIX modelViewProj;
+		};
+	public:
+		TransformCbuf(Graphics& gfx, const Drawable& parent, UINT slot = 0u);
+		void Bind(Graphics& gfx) override;
+	protected:
+		void UpdateBindImpl(Graphics& gfx, const Transforms& tf);
+		Transforms GetTransforms(Graphics& gfx);
 
-private:
-	static std::unique_ptr<VertexConstantBuffer<Transforms>> pVcbuf;
-	const Drawable& parent;
-};
+	private:
+		static std::unique_ptr<VertexConstantBuffer<Transforms>> pVcbuf;
+		const Drawable& parent;
+	};
+}

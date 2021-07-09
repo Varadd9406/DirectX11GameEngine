@@ -11,7 +11,7 @@ public:
 	template<class T, typename...Params>
 	static std::shared_ptr<T> Resolve(Graphics& gfx, Params&&...p)
 	{
-		static_assert(std::is_base_of<Bindable, T>::value, "Can only resolve classes derived from Bindable");
+		static_assert(std::is_base_of<bind::Bindable, T>::value, "Can only resolve classes derived from Bindable");
 		return Get().Resolve_<T>(gfx, std::forward<Params>(p)...);
 	}
 private:
@@ -37,5 +37,5 @@ private:
 		return codex;
 	}
 private:
-	std::unordered_map<std::string, std::shared_ptr<Bindable>> binds;
+	std::unordered_map<std::string, std::shared_ptr<bind::Bindable>> binds;
 };

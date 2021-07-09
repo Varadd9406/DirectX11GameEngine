@@ -26,8 +26,8 @@ protected:
 		}
 		return nullptr;
 	}
-	void AddBind(std::shared_ptr<Bindable> bind);
+	void AddBind(std::shared_ptr<bind::Bindable> bind);
 private:
-	const IndexBuffer* pIndexBuffer = nullptr;
-	std::vector<std::shared_ptr<Bindable>> binds;
+	const bind::IndexBuffer* pIndexBuffer = nullptr;
+	std::vector<std::shared_ptr<bind::Bindable>> binds;
 };

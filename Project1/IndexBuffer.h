@@ -2,26 +2,28 @@
 #include "Bindable.h"
 #include "BindableCodex.h"
 
-
-class IndexBuffer : public Bindable
+namespace bind
 {
-public:
-	IndexBuffer(Graphics& gfx, const std::vector<unsigned short>& indices);
-	IndexBuffer(Graphics& gfx, std::string tag, const std::vector<unsigned short>& indices);
-	void Bind(Graphics& gfx) override;
-	UINT GetCount() const;
-	static std::shared_ptr<IndexBuffer> Resolve(Graphics& gfx, const std::string& tag,
-		const std::vector<unsigned short>& indices);
-	template<typename...Ignore>
-	static std::string GenerateUID(const std::string& tag, Ignore&&...ignore)
+	class IndexBuffer : public Bindable
 	{
-		return GenerateUID_(tag);
-	}
-	std::string GetUID() const override;
-private:
-	static std::string GenerateUID_(const std::string& tag);
-protected:
-	std::string tag;
-	UINT count;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
-};
+	public:
+		IndexBuffer(Graphics& gfx, const std::vector<unsigned short>& indices);
+		IndexBuffer(Graphics& gfx, std::string tag, const std::vector<unsigned short>& indices);
+		void Bind(Graphics& gfx) override;
+		UINT GetCount() const;
+		static std::shared_ptr<IndexBuffer> Resolve(Graphics& gfx, const std::string& tag,
+			const std::vector<unsigned short>& indices);
+		template<typename...Ignore>
+		static std::string GenerateUID(const std::string& tag, Ignore&&...ignore)
+		{
+			return GenerateUID_(tag);
+		}
+		std::string GetUID() const override;
+	private:
+		static std::string GenerateUID_(const std::string& tag);
+	protected:
+		std::string tag;
+		UINT count;
+		Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
+	};
+}

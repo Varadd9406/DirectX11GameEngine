@@ -27,7 +27,7 @@ struct MODEL_DESC
 class Mesh : public Drawable
 {
 public:
-	Mesh(Graphics& gfx, std::vector<std::shared_ptr<Bindable>> bindPtrs);
+	Mesh(Graphics& gfx, std::vector<std::shared_ptr<bind::Bindable>> bindPtrs);
 	void Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const ;
 	DirectX::XMMATRIX GetTransformXM() const override;
 private:

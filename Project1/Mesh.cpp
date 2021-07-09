@@ -12,16 +12,16 @@ namespace dx = DirectX;
 
 
 // Mesh
-Mesh::Mesh(Graphics& gfx, std::vector<std::shared_ptr<Bindable>> bindPtrs)
+Mesh::Mesh(Graphics& gfx, std::vector<std::shared_ptr<bind::Bindable>> bindPtrs)
 {
 
-	AddBind(std::make_shared<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+	AddBind(std::make_shared<bind::Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 	for (auto& pb : bindPtrs)
 	{
 		AddBind(std::move(pb));
 	}
 
-	AddBind(std::make_shared<TransformCbuf2>(gfx, *this,0u,2u));
+	AddBind(std::make_shared<bind::TransformCbuf2>(gfx, *this,0u,2u));
 }
 void Mesh::Draw(Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform) const 
 {
@@ -269,44 +269,44 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 	}
 
 
-	std::vector<std::shared_ptr<Bindable>> bindablePtrs;
+	std::vector<std::shared_ptr<bind::Bindable>> bindablePtrs;
 
 	using namespace std::string_literals;
 	if (hasDiffuseMap)
 	{
-		bindablePtrs.push_back(Texture::Resolve(gfx, desc.diffuse_path, 0));
+		bindablePtrs.push_back(bind::Texture::Resolve(gfx, desc.diffuse_path, 0));
 	}
 	if (hasSpecularMap)
 	{
-		bindablePtrs.push_back(Texture::Resolve(gfx, desc.specular_path, 1));
+		bindablePtrs.push_back(bind::Texture::Resolve(gfx, desc.specular_path, 1));
 	}
 	if (hasNormalMap)
 	{
-		bindablePtrs.push_back(Texture::Resolve(gfx, desc.normal_path, 2));
+		bindablePtrs.push_back(bind::Texture::Resolve(gfx, desc.normal_path, 2));
 	}
 	if (hasEmissiveMap)
 	{
-		bindablePtrs.push_back(Texture::Resolve(gfx, desc.emission_path, 3));
+		bindablePtrs.push_back(bind::Texture::Resolve(gfx, desc.emission_path, 3));
 	}
 
-	bindablePtrs.push_back(Sampler::Resolve(gfx));
+	bindablePtrs.push_back(bind::Sampler::Resolve(gfx));
 
 	auto meshTag = desc.model_path + "%"s + mesh.mName.C_Str();
 
 
-	bindablePtrs.push_back(VertexBuffer::Resolve(gfx, meshTag, vbuf));
+	bindablePtrs.push_back(bind::VertexBuffer::Resolve(gfx, meshTag, vbuf));
 
-	bindablePtrs.push_back(IndexBuffer::Resolve(gfx, meshTag, indices));
+	bindablePtrs.push_back(bind::IndexBuffer::Resolve(gfx, meshTag, indices));
 	 
-	auto pvs = VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
+	auto pvs = bind::VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	bindablePtrs.push_back(std::move(pvs));
 
 
-	bindablePtrs.push_back(InputLayout::Resolve(gfx, vbuf.GetLayout(), pvsbc));
+	bindablePtrs.push_back(bind::InputLayout::Resolve(gfx, vbuf.GetLayout(), pvsbc));
 
 
-	bindablePtrs.push_back(PixelShader::Resolve(gfx, "TexNormalSpecEmsPhongPS.cso"));
+	bindablePtrs.push_back(bind::PixelShader::Resolve(gfx, "TexNormalSpecEmsPhongPS.cso"));
 	//struct PSMaterialConstant
 	//{
 	//	float specularIntensity = 0.6f;
@@ -329,7 +329,7 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 	buf["hasNormalMap"] = hasNormalMap;
 	buf["hasEmissiveMap"] = hasEmissiveMap;
 
-	bindablePtrs.push_back(std::make_shared<NocachePixelConstantBufferEX>(gfx, buf, 7u));
+	bindablePtrs.push_back(std::make_shared<bind::NocachePixelConstantBufferEX>(gfx, buf, 7u));
 	//bindablePtrs.push_back(std::make_shared<PixelConstantBuffer<PSMaps>>(gfx, psm, 7u));
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
