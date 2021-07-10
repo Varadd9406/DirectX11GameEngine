@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include "PointLight.h"
 #include "Mesh.h"
-#include "TestPlane.h"
+#include "TestCube.h"
 class App
 {
 	
@@ -35,16 +35,18 @@ private:
 	};
 	Model hammer_time{ wnd.Gfx(),hammer_time_desc };
 
-	MODEL_DESC plank_desc =
-	{
-		1.0f,
-		"Models\\Plank\\Plank.obj",
-		"Models\\Plank\\Textures\\Planks_albedo_2k.png",
-		"Models\\Plank\\Textures\\Planks_normal_2k.png",
-		"-1",
-		"-1",
-	};
-	Model plank{ wnd.Gfx(),plank_desc };
+	//MODEL_DESC plank_desc =
+	//{
+	//	1.0f,
+	//	"Models\\Plank\\Plank.obj",
+	//	"Models\\Plank\\Textures\\Planks_albedo_2k.png",
+	//	"Models\\Plank\\Textures\\Planks_normal_2k.png",
+	//	"-1",
+	//	"-1",
+	//};
+	//Model plank{ wnd.Gfx(),plank_desc };
+
+	TestCube cube{ wnd.Gfx(),4.0f };
 
 	struct
 	{

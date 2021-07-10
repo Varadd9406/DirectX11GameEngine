@@ -18,11 +18,11 @@ public:
 		{
 			b->Bind(gfx);
 		}
-		gfx.DrawIndexed(QueryBindable<IndexBuffer>()->GetCount());
+		gfx.DrawIndexed(QueryBindable<bind::IndexBuffer>()->GetCount());
 		outlining = false;
 	}
 private:
-	std::vector<std::shared_ptr<Bindable>> outlineEffect;
+	std::vector<std::shared_ptr<bind::Bindable>> outlineEffect;
 	struct PSMaterialConstant
 	{
 		float specularIntensity = 0.1f;

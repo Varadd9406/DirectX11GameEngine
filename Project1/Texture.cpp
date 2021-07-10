@@ -2,6 +2,7 @@
 #include "GraphicsThrowMacros.h"
 #include "Utility.h"
 #include <WICTextureLoader.h>
+#include <DirectXTex.h>
 #include "BindableCodex.h"
 
 namespace bind
@@ -17,19 +18,20 @@ namespace bind
 		//mbtowc(NULL, NULL, 0);
 		//mbtowc(wstr, fileName.c_str(), strlen(fileName.c_str()));
 		// create texture resource
-		DirectX::CreateWICTextureFromFile
+		DX_EXCEPT_THROW(DirectX::CreateWICTextureFromFile
 		(
 			GetDevice(gfx),
 			GetContext(gfx),
 			std::wstring{ path.begin(),path.end() }.c_str(),
 			nullptr,
 			&pTextureView
-		);
+		));
 	}
 
 	void Texture::Bind(Graphics& gfx)
 	{
-		GetContext(gfx)->PSSetShaderResources(slot, 1u, pTextureView.GetAddressOf());
+		INFOMAN(gfx);
+		DX_THROW_INFO_ONLY(GetContext(gfx)->PSSetShaderResources(slot, 1u, pTextureView.GetAddressOf()));
 	}
 
 

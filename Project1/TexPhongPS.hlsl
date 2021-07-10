@@ -13,14 +13,15 @@ cbuffer ObjectCbuf
 {
     float specularIntensity;
     float specularPower;
-    float padding[2];
+    bool NormalEnabled;
+    float padding[1];
 };
 
-Texture2D tex;
+Texture2D tex : register(t0);
 
 SamplerState splr;
 
-float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float2 tc : Texcoord) : SV_Target1
+float4 main(float3 worldPos : Position, float3 viewNormal : Normal, float2 tc : Texcoord) : SV_Target
 {
     
     viewNormal = normalize(viewNormal);

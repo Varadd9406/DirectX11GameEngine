@@ -153,6 +153,9 @@
     <ClCompile Include="LayoutCodex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TestCube.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Winhead.h">
@@ -302,12 +305,15 @@
     <ClInclude Include="Stencil.h">
       <Filter>Header Files\Bindable</Filter>
     </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCube.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="PhongPS.hlsl">
-      <Filter>Shaders\PixelShaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PhongVS.hlsl">
+    <FxCompile Include="PhongTexNmap_VS.hlsl">
       <Filter>Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="SolidPS.hlsl">
@@ -316,7 +322,7 @@
     <FxCompile Include="SolidVS.hlsl">
       <Filter>Shaders\VertexShaders</Filter>
     </FxCompile>
-    <FxCompile Include="TexNormalPhongPS.hlsl">
+    <FxCompile Include="PhongTexNmap_PS.hlsl">
       <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
     <FxCompile Include="TexNormalSpecEmsPhongPS.hlsl">
@@ -325,7 +331,7 @@
     <FxCompile Include="TexNormalSpecPhongPS.hlsl">
       <Filter>Shaders\PixelShaders</Filter>
     </FxCompile>
-    <FxCompile Include="TexNormalPhongVS.hlsl">
+    <FxCompile Include="PhongTexBiNmap_VS.hlsl">
       <Filter>Shaders\VertexShaders</Filter>
     </FxCompile>
     <FxCompile Include="TexPhongPS.hlsl">

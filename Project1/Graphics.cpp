@@ -52,15 +52,6 @@ Graphics::Graphics(HWND hWnd,int width,int height)
 	hr = pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget);
 	DX_EXCEPT_THROW(hr);
 
-	D3D11_DEPTH_STENCIL_DESC dsDesc = {};
-	dsDesc.DepthEnable = TRUE;
-	dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDSState;
-	hr = pDevice->CreateDepthStencilState(&dsDesc,&pDSState);
-	DX_EXCEPT_THROW(hr);
-
-	pContext->OMSetDepthStencilState(pDSState.Get(), 1u);
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencil;
 	D3D11_TEXTURE2D_DESC descDepth = {};
@@ -68,7 +59,7 @@ Graphics::Graphics(HWND hWnd,int width,int height)
 	descDepth.Height = height;
 	descDepth.MipLevels = 1u;
 	descDepth.ArraySize = 1u;
-	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+	descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	descDepth.SampleDesc.Count = 1u;
 	descDepth.SampleDesc.Quality = 0u;
 	descDepth.Usage = D3D11_USAGE_DEFAULT;
@@ -78,7 +69,7 @@ Graphics::Graphics(HWND hWnd,int width,int height)
 	DX_EXCEPT_THROW(hr);
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
-	descDSV.Format = DXGI_FORMAT_D32_FLOAT;
+	descDSV.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0u;
 
@@ -139,7 +130,7 @@ void Graphics::ClearBuffer(float red, float green, float blue)
 {
 	const float color[] = { red,green,blue,1.0f };
 	DX_THROW_INFO_ONLY(pContext->ClearRenderTargetView(pTarget.Get(), color));
-	DX_THROW_INFO_ONLY(pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH,1.0f,0u));
+	DX_THROW_INFO_ONLY(pContext->ClearDepthStencilView(pDSV.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0u));
 }
 
 void Graphics::DrawIndexed(UINT count)

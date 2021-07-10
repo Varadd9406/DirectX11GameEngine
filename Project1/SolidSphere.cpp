@@ -9,7 +9,7 @@
 #include "VertexShader.h"
 #include "GraphicsThrowMacros.h"
 #include "Sphere.h"
-
+#include "Stencil.h"
 
 
 SolidSphere::SolidSphere(Graphics& gfx, float radius)
@@ -40,6 +40,9 @@ SolidSphere::SolidSphere(Graphics& gfx, float radius)
 	AddBind(bind::Topology::Resolve(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
 	AddBind(std::make_shared<bind::TransformCbuf>(gfx, *this));
+
+	AddBind(std::make_shared<bind::Stencil>(gfx, bind::Stencil::Mode::Off));
+
 }
 
 void SolidSphere::SetPos(DirectX::XMFLOAT3 pos)

@@ -7,6 +7,7 @@
 #include "DynamicConstant.h"
 #include "ConstantBuffersEx.h"
 #include "LayoutCodex.h"
+#include "Stencil.h"
 
 namespace dx = DirectX;
 
@@ -298,7 +299,7 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 
 	bindablePtrs.push_back(bind::IndexBuffer::Resolve(gfx, meshTag, indices));
 	 
-	auto pvs = bind::VertexShader::Resolve(gfx, "TexNormalPhongVS.cso");
+	auto pvs = bind::VertexShader::Resolve(gfx, "PhongTexBiNmap_VS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	bindablePtrs.push_back(std::move(pvs));
 
@@ -331,6 +332,9 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, MODEL_
 
 	bindablePtrs.push_back(std::make_shared<bind::NocachePixelConstantBufferEX>(gfx, buf, 7u));
 	//bindablePtrs.push_back(std::make_shared<PixelConstantBuffer<PSMaps>>(gfx, psm, 7u));
+
+	bindablePtrs.push_back(std::make_shared<bind::Stencil>(gfx, bind::Stencil::Mode::Off));
+
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));
 }

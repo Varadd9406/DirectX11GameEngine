@@ -31,7 +31,9 @@ void App::DoFrame()
 
 	//Draw BS
 	hammer_time.Draw(wnd.Gfx());
-	plank.Draw(wnd.Gfx());
+	//plank.Draw(wnd.Gfx());
+	cube.Draw(wnd.Gfx());
+	cube.DrawOutline(wnd.Gfx());
 	light.Draw(wnd.Gfx());
 
 
@@ -99,7 +101,7 @@ void App::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	hammer_time.ShowWindow("Hammer");
-	plank.ShowWindow("Plank");
+	//plank.ShowWindow("Plank");
 
 
 	wnd.Gfx().EndFrame();

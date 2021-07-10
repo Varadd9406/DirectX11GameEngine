@@ -7,6 +7,7 @@
 
 TestCube::TestCube(Graphics& gfx, float size)
 {
+	using namespace bind;
 	namespace dx = DirectX;
 
 	auto model = Cube::MakeIndependentTextured();
@@ -16,14 +17,14 @@ TestCube::TestCube(Graphics& gfx, float size)
 	AddBind(VertexBuffer::Resolve(gfx, geometryTag, model.vertices));
 	AddBind(IndexBuffer::Resolve(gfx, geometryTag, model.indices));
 
-	AddBind(Texture::Resolve(gfx, "Images\\brickwall.jpg"));
+	AddBind(Texture::Resolve(gfx, "Models\\Image\\Brick_Wall\\BrickWall_Albedo.png",0u));
 	AddBind(Sampler::Resolve(gfx));
 
-	auto pvs = VertexShader::Resolve(gfx, "PhongVS.cso");
+	auto pvs = VertexShader::Resolve(gfx, "PhongTexNmap_VS.cso");
 	auto pvsbc = pvs->GetBytecode();
 	AddBind(std::move(pvs));
 
-	AddBind(PixelShader::Resolve(gfx, "PhongPS.cso"));
+	AddBind(PixelShader::Resolve(gfx, "TexPhongPS.cso"));
 
 	AddBind(PixelConstantBuffer<PSMaterialConstant>::Resolve(gfx, pmc, 1u));
 
@@ -31,7 +32,7 @@ TestCube::TestCube(Graphics& gfx, float size)
 
 	AddBind(Topology::Resolve(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
-	auto tcbdb = std::make_shared<TransformCbufDoubleboi>(gfx, *this, 0u, 2u);
+	auto tcbdb = std::make_shared<TransformCbuf2>(gfx, *this, 0u, 2u);
 	AddBind(tcbdb);
 
 	AddBind(std::make_shared<Stencil>(gfx, Stencil::Mode::Write));
@@ -97,7 +98,7 @@ void TestCube::SpawnControlWindow(Graphics& gfx, const char* name) noexcept
 		pmc.normalMappingEnabled = checkState ? TRUE : FALSE;
 		if (changed0 || changed1 || changed2)
 		{
-			QueryBindable<Bind::PixelConstantBuffer<PSMaterialConstant>>()->Update(gfx, pmc);
+			QueryBindable<bind::PixelConstantBuffer<PSMaterialConstant>>()->Update(gfx, pmc);
 		}
 	}
 	ImGui::End();

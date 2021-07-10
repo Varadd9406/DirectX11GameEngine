@@ -360,10 +360,20 @@ namespace dymvtx
 	class VertexBuffer
 	{
 	public:
-		VertexBuffer(VertexLayout layout)
+		VertexBuffer(VertexLayout layout, size_t size = 0)
 			:
 			layout(std::move(layout))
-		{}
+		{
+			Resize(size);
+		}
+		void Resize(size_t newSize)
+		{
+			const auto size = Size();
+			if (size < newSize)
+			{
+				buffer.resize(buffer.size() + layout.Size() * (newSize - size));
+			}
+		}
 		const char* GetData() const
 		{
 			return buffer.data();
