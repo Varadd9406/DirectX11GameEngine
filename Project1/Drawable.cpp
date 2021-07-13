@@ -3,22 +3,33 @@
 #include "IndexBuffer.h"
 #include <cassert>
 #include <typeinfo>
-
-void Drawable::Draw(Graphics& gfx) const
+#include "FrameCommander.h"
+void Drawable::Submit(FrameCommander& frame)
 {
-	for (auto& b : binds)
+	for (auto tech : techniques)
 	{
-		b->Bind(gfx);
+		tech->Submit(frame,*this );
 	}
-	gfx.DrawIndexed(pIndexBuffer->GetCount());
 }
 
-void Drawable::AddBind(std::shared_ptr<bind::Bindable> bind)
+
+void Drawable::AddTechnique(std::unique_ptr<Technique> tech_in)
 {
-	if (typeid(*bind) == typeid(bind::IndexBuffer))
-	{
-		assert("Binding multiple index buffers not allowed" && pIndexBuffer == nullptr);
-		pIndexBuffer = &static_cast<bind::IndexBuffer&>(*bind);
-	}
-	binds.push_back(std::move(bind));
+	tech_in->InitializeParentReferences(*this);
+	techniques.push_back(std::move(tech_in));
 }
+
+void Drawable::Bind(Graphics& gfx) 
+{
+	pTopology->Bind(gfx);
+	pIndices->Bind(gfx);
+	pVertices->Bind(gfx);
+}
+
+UINT Drawable::GetIndexCount()
+{
+	return pIndices->GetCount();
+}
+
+Drawable::~Drawable()
+{}

@@ -22,7 +22,7 @@ namespace bind
 			{
 				dsDesc.DepthEnable = FALSE;
 				dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-				dsDesc.StencilEnable = FALSE;
+				dsDesc.StencilEnable = TRUE;
 				dsDesc.StencilWriteMask = 0xFF;
 				dsDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 				dsDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
@@ -44,7 +44,7 @@ namespace bind
 			GetContext(gfx)->OMSetDepthStencilState(pStencil.Get(), 0xFF);
 		}
 		static std::shared_ptr<Stencil> Resolve(Graphics& gfx, Mode mode)
-		{
+		{    
 			return Codex::Resolve<Stencil>(gfx, mode);
 		}
 		static std::string GenerateUID(Mode mode)

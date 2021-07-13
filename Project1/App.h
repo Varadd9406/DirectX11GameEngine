@@ -5,8 +5,11 @@
 #include "ImguiManger.h"
 #include "Camera.h"
 #include "PointLight.h"
-#include "Mesh.h"
+//#include "Mesh.h"
 #include "TestCube.h"
+#include "FrameCommander.h"
+
+
 class App
 {
 	
@@ -23,17 +26,19 @@ private:
 	Window wnd;
 	Timer timer;
 	Camera cam;
+	FrameCommander fc;
+	TestCube cube{ wnd.Gfx(),4.0f };
 	PointLight light;
-	MODEL_DESC hammer_time_desc =
-	{
-		1.0f,
-		"Models\\Rune_Hammer\\Rune_Hammer.obj",
-		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png",
-		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png",
-		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",
-		"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png",
-	};
-	Model hammer_time{ wnd.Gfx(),hammer_time_desc };
+	//MODEL_DESC hammer_time_desc =
+	//{
+	//	1.0f,
+	//	"Models\\Rune_Hammer\\Rune_Hammer.obj",
+	//	"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Albedo.png",
+	//	"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Normal.png",
+	//	"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Metallic.png",
+	//	"Models\\Rune_Hammer\\Textures\\Rune_Hammer_Emission.png",
+	//};
+	//Model hammer_time{ wnd.Gfx(),hammer_time_desc };
 
 	//MODEL_DESC plank_desc =
 	//{
@@ -45,9 +50,6 @@ private:
 	//	"-1",
 	//};
 	//Model plank{ wnd.Gfx(),plank_desc };
-
-	TestCube cube{ wnd.Gfx(),4.0f };
-
 	struct
 	{
 		float roll = 0.0f;

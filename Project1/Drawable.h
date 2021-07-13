@@ -4,30 +4,33 @@
 #include <DirectXMath.h>
 #include <memory>
 #include "IndexBuffer.h"
+#include "Technique.h"
+
+
+
+namespace bind
+{
+	class IndexBuffer;
+	class VertexBuffer;
+	class Topology;
+	class InputLayout;
+}
+
 
 class Drawable
 {
 public:
 	Drawable() = default;
 	Drawable(const Drawable&) = delete;
+	void AddTechnique(std::unique_ptr<Technique> tech_in) ;
 	virtual DirectX::XMMATRIX GetTransformXM() const = 0;
-	void Draw(Graphics& gfx) const ;
-	virtual ~Drawable() = default;
+	void Submit(class FrameCommander& frame) ;
+	void Bind(Graphics& gfx) ;
+	UINT GetIndexCount() ;
+	virtual ~Drawable();
 protected:
-	template<class T>
-	T* QueryBindable()
-	{
-		for (auto& pb : binds)
-		{
-			if (auto pt = dynamic_cast<T*>(pb.get()))
-			{
-				return pt;
-			}
-		}
-		return nullptr;
-	}
-	void AddBind(std::shared_ptr<bind::Bindable> bind);
-private:
-	const bind::IndexBuffer* pIndexBuffer = nullptr;
-	std::vector<std::shared_ptr<bind::Bindable>> binds;
+	std::shared_ptr<bind::IndexBuffer> pIndices;
+	std::shared_ptr<bind::VertexBuffer> pVertices;
+	std::shared_ptr<bind::Topology> pTopology;
+	std::vector<std::shared_ptr<Technique>> techniques;
 };

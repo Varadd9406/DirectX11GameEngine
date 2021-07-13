@@ -43,6 +43,12 @@
     <Filter Include="Shaders\Headers">
       <UniqueIdentifier>{e896fa6d-386b-4427-b3aa-32765af9f329}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Jobber">
+      <UniqueIdentifier>{eeed4e8f-b669-4289-b344-43b210caab0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Jobber">
+      <UniqueIdentifier>{6b478935-4f35-494c-8a52-027727990f1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -155,6 +161,18 @@
     </ClCompile>
     <ClCompile Include="TestCube.cpp">
       <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Step.cpp">
+      <Filter>Source Files\Jobber</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>Source Files\Jobber</Filter>
+    </ClCompile>
+    <ClCompile Include="NullPixelShader.cpp">
+      <Filter>Source Files\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Technique.cpp">
+      <Filter>Source Files\Jobber</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +328,24 @@
     </ClInclude>
     <ClInclude Include="TestCube.h">
       <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Step.h">
+      <Filter>Header Files\Jobber</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Header Files\Jobber</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameCommander.h">
+      <Filter>Header Files\Jobber</Filter>
+    </ClInclude>
+    <ClInclude Include="NullPixelShader.h">
+      <Filter>Header Files\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Pass.h">
+      <Filter>Header Files\Jobber</Filter>
+    </ClInclude>
+    <ClInclude Include="Technique.h">
+      <Filter>Header Files\Jobber</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 #include "PointLight.h"
 #include "imgui/imgui.h"
+#include "FrameCommander.h"
 
 PointLight::PointLight(Graphics& gfx, float radius)
 	:
@@ -49,10 +50,10 @@ void PointLight::Reset()
 	};
 }
 
-void PointLight::Draw(Graphics& gfx) const
+void PointLight::Submit(FrameCommander& frame)
 {
 	mesh.SetPos(cbData.pos);
-	mesh.Draw(gfx);
+	mesh.Submit(frame);
 }
 
 void PointLight::Bind(Graphics& gfx, DirectX::FXMMATRIX view) const

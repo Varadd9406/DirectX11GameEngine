@@ -11,7 +11,8 @@ namespace bind
 	VertexBuffer::VertexBuffer(Graphics& gfx, const std::string& tag, const dymvtx::VertexBuffer& vbuf)
 		:
 		stride((UINT)vbuf.GetLayout().Size()),
-		tag(tag)
+		tag(tag),
+		layout(vbuf.GetLayout())
 	{
 		INFOMAN(gfx);
 
@@ -25,6 +26,11 @@ namespace bind
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vbuf.GetData();
 		DX_EXCEPT_THROW(GetDevice(gfx)->CreateBuffer(&bd, &sd, &pVertexBuffer));
+	}
+
+	 dymvtx::VertexLayout& VertexBuffer::GetLayout()
+	{
+		return layout;
 	}
 
 	void VertexBuffer::Bind(Graphics& gfx)

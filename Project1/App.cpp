@@ -30,11 +30,16 @@ void App::DoFrame()
 	light.Bind(wnd.Gfx(), cam.GetMatrix());
 
 	//Draw BS
-	hammer_time.Draw(wnd.Gfx());
+	//hammer_time.Draw(wnd.Gfx());
 	//plank.Draw(wnd.Gfx());
-	cube.Draw(wnd.Gfx());
-	cube.DrawOutline(wnd.Gfx());
-	light.Draw(wnd.Gfx());
+
+	light.Submit(fc);
+
+	cube.Submit(fc);
+
+
+	fc.Execute(wnd.Gfx());
+
 
 
 	while (const auto e = wnd.kbd.ReadKey())
@@ -100,11 +105,12 @@ void App::DoFrame()
 	ImguiStuff();
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	hammer_time.ShowWindow("Hammer");
+	//hammer_time.ShowWindow("Hammer");
 	//plank.ShowWindow("Plank");
 
 
 	wnd.Gfx().EndFrame();
+	fc.Reset();
 }
 
 void App::ImguiStuff()
