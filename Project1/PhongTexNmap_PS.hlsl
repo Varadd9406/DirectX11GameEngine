@@ -2,12 +2,6 @@
 #include "ShaderOps.hlsli"
 
 
-cbuffer Cbuf : register(b2)
-{
-    matrix modelView;
-    matrix modelViewProj;
-};
-
 cbuffer ObjectCbuf : register(b1)
 {
     float specularIntensity;

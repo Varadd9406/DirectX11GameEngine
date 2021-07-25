@@ -1,6 +1,6 @@
 #pragma once
 #include "Graphics.h"
-
+#include "TechniqueProbe.h"
 class Drawable;
 
 
@@ -16,6 +16,7 @@ namespace bind
 			return "";
 		}
 		virtual void InitializeParentReference(const Drawable&) {}
+		virtual void Accept(class TechniqueProbe&) {}
 		virtual ~Bindable() = default;
 	protected:
 		static ID3D11DeviceContext* GetContext(Graphics& gfx);

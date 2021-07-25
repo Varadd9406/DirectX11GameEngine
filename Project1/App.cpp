@@ -105,6 +105,7 @@ void App::DoFrame()
 	ImguiStuff();
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
+	cube.SpawnControlWindow(wnd.Gfx(),"Cube");
 	//hammer_time.ShowWindow("Hammer");
 	//plank.ShowWindow("Plank");
 

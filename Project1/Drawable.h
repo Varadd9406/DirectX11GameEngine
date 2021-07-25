@@ -26,6 +26,7 @@ public:
 	virtual DirectX::XMMATRIX GetTransformXM() const = 0;
 	void Submit(class FrameCommander& frame) ;
 	void Bind(Graphics& gfx) ;
+	void Accept(TechniqueProbe& probe);
 	UINT GetIndexCount() ;
 	virtual ~Drawable();
 protected:

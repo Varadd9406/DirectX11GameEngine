@@ -26,6 +26,14 @@ void Drawable::Bind(Graphics& gfx)
 	pVertices->Bind(gfx);
 }
 
+void Drawable::Accept(TechniqueProbe& probe)
+{
+	for (auto& t : techniques)
+	{
+		t->Accept(probe);
+	}
+}
+
 UINT Drawable::GetIndexCount()
 {
 	return pIndices->GetCount();

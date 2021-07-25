@@ -13,8 +13,6 @@ cbuffer ObjectCbuf
 {
     float specularIntensity;
     float specularPower;
-    bool NormalEnabled;
-    float padding[1];
 };
 
 Texture2D tex : register(t0);

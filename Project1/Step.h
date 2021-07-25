@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "Bindable.h"
+#include "TechniqueProbe.h"
 
 class Step
 {
@@ -10,18 +11,6 @@ public:
 		:
 		targetPass{ targetPass_in }
 	{}
-	//template<class B>
-	//B* QueryBindable() noexcept
-	//{
-	//	for( auto& pb : binds )
-	//	{
-	//		if( auto pt = dynamic_cast<T*>(pb.get()) )
-	//		{
-	//			return pt;
-	//		}
-	//	}
-	//	return nullptr;
-	//}
 	void AddBindable(std::shared_ptr<bind::Bindable> bind_in) 
 	{
 		bindables.push_back(std::move(bind_in));
@@ -34,6 +23,15 @@ public:
 		}
 	}
 	void InitializeParentReferences(const class Drawable& parent);
+
+	void Accept(TechniqueProbe& probe)
+	{
+		probe.SetStep(this);
+		for (auto& pb : bindables)
+		{
+			pb->Accept(probe);
+		}
+	}
 public:
 	size_t targetPass;
 private:
